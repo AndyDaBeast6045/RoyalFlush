@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3676f97895ef594083e6360fbeb0913, type: 3}
-  m_Name: Test Card
+  m_Name: 2 of Clubs Test
   m_EditorClassIdentifier: 
-  cardName: Test Card
-  sprite: {fileID: 21300000, guid: 493e556afd420b5428873f1fe156310c, type: 3}
-  rank: 53
-  suit: 3
+  cardName: 
+  sprite: {fileID: 0}
+  rank: 50
+  suit: 0
   cardScript: {fileID: 11400000, guid: 3e6900f1a1d42bd4a8ccacce80f1a81b, type: 2}
   isRare: 0
