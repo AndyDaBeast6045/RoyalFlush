@@ -20,7 +20,7 @@ public class ShopController : MonoBehaviour
     void Start()
     {
         cardShop = new CardData[cardShopSize];
-        cardPool = Resources.LoadAll("CardPool", typeof(CardData));
+        cardPool = Resources.LoadAll("CardPool", typeof(CardController)); // See CardReferences for pools.
         randomize();
     }
 

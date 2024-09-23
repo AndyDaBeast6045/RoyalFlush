@@ -65,9 +65,4 @@ public class CardData : ScriptableObject, IComparable
         }
         throw new ArgumentException("Invalid argument " + rank + " passed to CharRankToIntRank(char rank)!");
     }
-
-    public override string ToString()
-    {
-        return "Card is the " + rank + " of " + suit;
-    }
 }
