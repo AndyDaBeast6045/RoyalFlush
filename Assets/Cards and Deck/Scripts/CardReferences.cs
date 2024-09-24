@@ -6,13 +6,13 @@ using UnityEngine;
 public class CardReferences : ScriptableObject
 {
     // For loot and shop population
-    Object[] numberCardPool;
-    Object[] rareCardPool;
+    public Object[] numberCardPool { get; private set; }
+    public Object[] rareCardPool { get; private set; }
 
     private void OnEnable()
     {
-        numberCardPool = Resources.LoadAll("Cards and Deck/Prefabs/Complete/Numbered");
-        rareCardPool = Resources.LoadAll("Cards and Deck/Prefabs/Complete/Rare");
+        numberCardPool = Resources.LoadAll("Cards and Deck/Prefabs/Complete/Numbered", typeof(GameObject));
+        rareCardPool = Resources.LoadAll("Cards and Deck/Prefabs/Complete/Rare", typeof(GameObject));
     }
     // References to card effect scripts
     #region Numbered Card scripts

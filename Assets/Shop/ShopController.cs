@@ -10,7 +10,9 @@ public class ShopController : MonoBehaviour
 
     // Potential cards that could be in the shop
     [SerializeField] private Object[] cardPool;
-
+    // Grants access to Object[] arrays allCards.numberCardPool and allCards.rareCardPool
+    [SerializeField] private CardReferences allCards;
+    
     // Until a proper area for player stuff exists
     [SerializeField] private int Chips = 500;
 
@@ -19,8 +21,10 @@ public class ShopController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cardShop = new CardData[cardShopSize];
-        cardPool = Resources.LoadAll("CardPool", typeof(CardController)); // See CardReferences for pools.
+        cardShop = new CardController[cardShopSize];
+        // Use allCards.numberCardPool and allCards.rareCardPool
+        // cardPool = Resources.LoadAll("CardPool", typeof(CardController));
+
         randomize();
     }
 

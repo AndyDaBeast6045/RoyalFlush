@@ -747,7 +747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6efd9578b55e0e1418ddb374dfadfec9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxOffsetX: 200
+  maxOffsetX: 250
   maxOffsetY: 20
   maxRotation: 10
 --- !u!1 &1766819569
