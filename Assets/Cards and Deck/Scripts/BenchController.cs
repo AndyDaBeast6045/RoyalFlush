@@ -9,7 +9,11 @@ public class BenchController : MonoBehaviour
     List<RectTransform> benchAnchors;
 
     [SerializeField]
-    int maxOffset;
+    int maxOffsetX;
+    [SerializeField]
+    int maxOffsetY;
+    [SerializeField]
+    float maxRotation;
 
     List<CardController> bench = new List<CardController>();
 
@@ -24,6 +28,7 @@ public class BenchController : MonoBehaviour
             bench.Add(card);
         }
         SortBench();
+        DisplayBench();
     }
     public void SortBench()
     {
@@ -50,45 +55,46 @@ public class BenchController : MonoBehaviour
     
     public static List<RectTransform> GetChildren(RectTransform t)
     {
-        List<Transform> children = new List<Transform>();
+        List<RectTransform> children = new List<RectTransform>();
         for (int i = 0; i < t.childCount; i++)
         {
-            children.Add(t.GetChild(i));
+            children.Add(t.GetChild(i).GetComponent<RectTransform>());
         }
         return children;
     }
 
     private void DisplayBench()
     {
-        if (bench.Count % 2 == 0)
-        {
-            DisplayEvenBench();
-        }
-        else
-        {
-            DisplayOddBench();
-        }
-    }
-
-    private void DisplayOddBench()
-    {
-        RectTransform[] cardPositions = new RectTransform[bench.Count];
         for (int i = 0; i < bench.Count; i++)
         {
-            cardPositions[i] = bench[i].GetComponent<RectTransform>();
-            cardPositions[i].anchoredPosition = new Vector2()
+            benchAnchors[i].anchoredPosition3D = CalculateCardPosition(i);
+            benchAnchors[i].rotation = Quaternion.Euler(0, 0, CalculateCardRotation(i));
         }
     }
 
-    private void DisplayEvenBench()
+    private Vector3 CalculateCardPosition(int index)
     {
-
+        Vector3 cardPos = new Vector3();
+        int halfIndex = Mathf.CeilToInt(bench.Count / 2f) - 1;
+        cardPos.x = Mathf.Lerp(-maxOffsetX, maxOffsetX, index / (bench.Count - 1f));
+        if (index <= halfIndex)
+        {
+            cardPos.y = Mathf.Lerp(-maxOffsetY, maxOffsetY, index / (float)(halfIndex));
+        } else if (bench.Count % 2 == 0)
+        {
+            index--; // For even bench sizes, have the same y pos for two cards in the middle
+            cardPos.y = Mathf.Lerp(maxOffsetY, -maxOffsetY, (index - halfIndex) / (float)(halfIndex));
+        } else
+        {
+            cardPos.y = Mathf.Lerp(maxOffsetY, -maxOffsetY, (index - halfIndex) / (float)(halfIndex));
+        }
+        cardPos.z = 1 - (0.1f * index);
+        return cardPos;
     }
 
-    private Vector2 CalculateCardPosition(int index)
+    private float CalculateCardRotation(int index)
     {
-        Vector2 cardPos = new Vector2();
-        // Lerp 
-        return cardPos;
+        float zRotation = Mathf.Lerp(maxRotation, -maxRotation, index / (bench.Count - 1f));
+        return zRotation;
     }
 }
