@@ -82,8 +82,8 @@ public class BenchController : MonoBehaviour
             cardPos.y = Mathf.Lerp(-maxOffsetY, maxOffsetY, index / (float)(halfIndex));
         } else if (bench.Count % 2 == 0)
         {
-            index--; // For even bench sizes, have the same y pos for two cards in the middle
-            cardPos.y = Mathf.Lerp(maxOffsetY, -maxOffsetY, (index - halfIndex) / (float)(halfIndex));
+            // For even bench sizes, have the same y pos for two cards in the middle
+            cardPos.y = Mathf.Lerp(maxOffsetY, -maxOffsetY, (index - halfIndex - 1) / (float)(halfIndex));
         } else
         {
             cardPos.y = Mathf.Lerp(maxOffsetY, -maxOffsetY, (index - halfIndex) / (float)(halfIndex));
