@@ -15,7 +15,8 @@ public class BenchController : MonoBehaviour
     [SerializeField]
     float maxRotation;
 
-    List<CardController> bench = new List<CardController>();
+    [SerializeField]
+    public List<CardController> bench;
 
     new RectTransform transform;
 
@@ -23,6 +24,7 @@ public class BenchController : MonoBehaviour
     {
         bench.Clear();
         CardController[] benchArray = transform.GetComponentsInChildren<CardController>();
+        benchAnchors = GetChildren(transform);
         foreach (CardController card in benchArray)
         {
             bench.Add(card);
@@ -35,8 +37,9 @@ public class BenchController : MonoBehaviour
         bench.Sort();
     }
 
-    private void Start()
+    private void Awake()
     {
+        bench = new List<CardController>();
         transform = GetComponent<RectTransform>();
         benchAnchors = GetChildren(transform);
         UpdateBench();
@@ -67,6 +70,7 @@ public class BenchController : MonoBehaviour
     {
         for (int i = 0; i < bench.Count; i++)
         {
+            Debug.Log(i);
             benchAnchors[i].anchoredPosition3D = CalculateCardPosition(i);
             benchAnchors[i].rotation = Quaternion.Euler(0, 0, CalculateCardRotation(i));
         }
@@ -77,6 +81,7 @@ public class BenchController : MonoBehaviour
         Vector3 cardPos = new Vector3();
         int halfIndex = Mathf.CeilToInt(bench.Count / 2f) - 1;
         cardPos.x = Mathf.Lerp(-maxOffsetX, maxOffsetX, index / (bench.Count - 1f));
+
         if (index <= halfIndex)
         {
             cardPos.y = Mathf.Lerp(-maxOffsetY, maxOffsetY, index / (float)(halfIndex));
@@ -96,5 +101,13 @@ public class BenchController : MonoBehaviour
     {
         float zRotation = Mathf.Lerp(maxRotation, -maxRotation, index / (bench.Count - 1f));
         return zRotation;
+    }
+
+    public CardController AddToBench(CardController card)
+    {
+        card.transform.SetParent(transform);
+        bench.Add(card);
+        UpdateBench();
+        return card;
     }
 }

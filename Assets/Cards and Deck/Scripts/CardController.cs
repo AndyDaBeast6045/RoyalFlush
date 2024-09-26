@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,10 +19,11 @@ public class CardController : MonoBehaviour, System.IComparable
     [SerializeField] private CardSuit suit;
     [SerializeField] public CardScript cardScript;
     [SerializeField] private bool isRare; // Marked true if rank is J, Q, K, or A
-    [SerializeField] private CardReferences cardEffects;
 
     private Button button;
     private SpriteRenderer render;
+
+    [SerializeField] DeckController deckScript;
 
     #endregion
 
@@ -32,6 +34,7 @@ public class CardController : MonoBehaviour, System.IComparable
         render = GetComponent<SpriteRenderer>();
         bench = transform.parent.GetComponent<BenchController>();
     }
+
 
     #region Getters
     public Sprite GetSprite() { return sprite; }
@@ -44,6 +47,7 @@ public class CardController : MonoBehaviour, System.IComparable
     public void ActivateCard()
     {
         Debug.Log("Click registered.");
+        //deckScript.DrawCard(); //TEST
         cardScript.ActivateCard(); // Testing purposes!!
     }
 
@@ -86,6 +90,7 @@ public class CardController : MonoBehaviour, System.IComparable
             return CharRankToIntRank(this.rank).CompareTo(CharRankToIntRank(otherData.GetRank()));
         }
     }
+
     public override string ToString()
     {
         return "Card is the " + rank + " of " + suit;

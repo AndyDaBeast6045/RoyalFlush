@@ -420,6 +420,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1254696619}
+  - {fileID: 1029592164}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -451,6 +452,10 @@ PrefabInstance:
       propertyPath: suit
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2489823565996918728, guid: daf534edac5af8649a28913ee2b87080, type: 3}
+      propertyPath: deckScript
+      value: 
+      objectReference: {fileID: 1029592165}
     - target: {fileID: 5863238611374425491, guid: daf534edac5af8649a28913ee2b87080, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -703,6 +708,58 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5863238611374425491, guid: daf534edac5af8649a28913ee2b87080, type: 3}
   m_PrefabInstance: {fileID: 796360774}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1029592163
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1029592164}
+  - component: {fileID: 1029592165}
+  m_Layer: 5
+  m_Name: Deck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1029592164
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1029592163}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 650511841}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1029592165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1029592163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1af5e12dd472174db044e9dc99c7976, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allGameCards: {fileID: 11400000, guid: 17d92ae881229a843836e27d145f5e61, type: 2}
+  benchScript: {fileID: 1254696620}
+  fullDeck: []
+  deck: []
 --- !u!1 &1254696618
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,6 +815,7 @@ MonoBehaviour:
   maxOffsetX: 200
   maxOffsetY: 15
   maxRotation: 15
+  bench: []
 --- !u!1 &1766819569
 GameObject:
   m_ObjectHideFlags: 0
