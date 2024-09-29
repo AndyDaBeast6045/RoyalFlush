@@ -25,6 +25,8 @@ public class CardController : MonoBehaviour, System.IComparable
 
     [SerializeField] DeckController deckScript;
 
+    public bool selected { get; private set; }
+
     #endregion
 
     // Start is called before the first frame update
@@ -33,6 +35,7 @@ public class CardController : MonoBehaviour, System.IComparable
         button = GetComponent<Button>();
         render = GetComponent<SpriteRenderer>();
         bench = transform.parent.GetComponent<BenchController>();
+        deckScript = bench.GetDeckScript();
     }
 
 
@@ -49,6 +52,12 @@ public class CardController : MonoBehaviour, System.IComparable
         Debug.Log("Click registered.");
         //deckScript.DrawCard(); //TEST
         cardScript.ActivateCard(); // Testing purposes!!
+    }
+
+    public void ToggleSelect()
+    {
+        selected = !selected;
+        // Update display
     }
 
     // STATIC METHODS //

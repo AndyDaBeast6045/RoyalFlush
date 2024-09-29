@@ -10,6 +10,8 @@ public class DeckController : MonoBehaviour
     CardReferences allGameCards;
     [SerializeField]
     BenchController benchScript;
+    [SerializeField]
+    DiscardPileController discardPile;
 
     [SerializeField]
     List<CardController> fullDeck; // List of all cards the player possesses
@@ -67,6 +69,7 @@ public class DeckController : MonoBehaviour
         if (deck.Count == 0)
         {
             InitiatePlayDeck();
+            discardPile.ClearDiscardPile();
         }
         CardController card = benchScript.AddToBench(deck[0]);
         deck.RemoveAt(0);

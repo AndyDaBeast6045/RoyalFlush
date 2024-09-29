@@ -14,6 +14,10 @@ public class BenchController : MonoBehaviour
     int maxOffsetY;
     [SerializeField]
     float maxRotation;
+    [SerializeField]
+    DeckController deckScript;
+    [SerializeField]
+    DiscardPileController discardScript;
 
     [SerializeField]
     public List<CardController> bench;
@@ -65,6 +69,8 @@ public class BenchController : MonoBehaviour
         }
         return children;
     }
+
+    public DeckController GetDeckScript() { return deckScript; }
 
     private void DisplayBench()
     {
