@@ -565,8 +565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67f3527e31bda1e41b0c431734b468c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 10
-  maxHealth: 10
+  health: {fileID: 838209972}
   heartburn: 0
 --- !u!1 &1333967342
 GameObject:

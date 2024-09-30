@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class heartburnManager : PlayerHealth
+public class heartburnManager : MonoBehaviour
 {
+    public PlayerHealth health;
     public int heartburn = 0;
 
         public void ReceiveHeartburn(int amount)
@@ -13,7 +14,7 @@ public class heartburnManager : PlayerHealth
 
     public void TickHeartburn()
     {
-        currentHealth -= heartburn * 2; //use damage script when done
+        health.currentHealth -= heartburn * 2; //use damage script when done
 
         if (heartburn % 2 == 0) {
 
