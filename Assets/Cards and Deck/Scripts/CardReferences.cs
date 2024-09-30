@@ -11,8 +11,8 @@ public class CardReferences : ScriptableObject
 
     private void OnEnable()
     {
-        numberCardPool = Resources.LoadAll("Cards and Deck/Prefabs/Complete/Numbered", typeof(GameObject));
-        rareCardPool = Resources.LoadAll("Cards and Deck/Prefabs/Complete/Rare", typeof(GameObject));
+        numberCardPool = Resources.LoadAll("Complete/Numbered", typeof(Object));
+        rareCardPool = Resources.LoadAll("Complete/Rare", typeof(Object));
     }
     // References to card effect scripts
     #region Numbered Card scripts

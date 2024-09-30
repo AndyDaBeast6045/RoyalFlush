@@ -10,12 +10,14 @@ public class CurrencyController : MonoBehaviour
     public int CheckChips()
     {
         return chips;
+        Debug.Log("Chips: " + chips);
     }
 
     // Add chips to player's possession
     public void AddChips(int chips)
     {
         this.chips += chips;
+        Debug.Log("Chips added: " + chips);
     }
 
     // Remove chips from player's possession
@@ -23,5 +25,6 @@ public class CurrencyController : MonoBehaviour
     public void RemoveChips(int chips)
     {
         this.chips -= chips;
+        Debug.Log("Chips removed: " + chips);
     }
 }
