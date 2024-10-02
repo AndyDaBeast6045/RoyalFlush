@@ -116,4 +116,17 @@ public class BenchController : MonoBehaviour
         UpdateBench();
         return card;
     }
+
+    public List<CardController> GetSelectedCards()
+    {
+        List<CardController> selectedCards = new List<CardController>();
+        for (int i = 0; i < bench.Count; i++)
+        {
+            if (bench[i].selected)
+            {
+                selectedCards.Add(bench[i]);
+            }
+        }
+        return selectedCards;
+    }
 }

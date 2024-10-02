@@ -23,9 +23,10 @@ public class CardController : MonoBehaviour, System.IComparable
     private Button button;
     private SpriteRenderer render;
 
-    [SerializeField] DeckController deckScript;
+    DeckController deckScript;
 
-    public bool selected { get; private set; }
+    [SerializeField]
+    public bool selected;
 
     #endregion
 
@@ -34,7 +35,7 @@ public class CardController : MonoBehaviour, System.IComparable
     {
         button = GetComponent<Button>();
         render = GetComponent<SpriteRenderer>();
-        bench = transform.parent.GetComponent<BenchController>();
+        bench = transform.parent.parent.GetComponent<BenchController>();
         deckScript = bench.GetDeckScript();
     }
 
@@ -56,7 +57,10 @@ public class CardController : MonoBehaviour, System.IComparable
 
     public void ToggleSelect()
     {
-        selected = !selected;
+        if (bench.GetSelectedCards().Count <= 5)
+        {
+            selected = !selected;
+        }
         // Update display
     }
 
