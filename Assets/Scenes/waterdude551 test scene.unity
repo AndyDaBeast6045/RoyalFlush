@@ -497,8 +497,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1254696619}
-  - {fileID: 1029592164}
-  - {fileID: 1641319677}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -712,12 +710,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1029592163}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -5}
+  m_LocalScale: {x: 0.02004008, y: 0.02004008, z: 0.02004008}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 650511841}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -738,6 +736,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allGameCards: {fileID: 11400000, guid: 17d92ae881229a843836e27d145f5e61, type: 2}
   benchScript: {fileID: 1254696620}
+  discardPile: {fileID: 1641319678}
   fullDeck: []
   deck: []
 --- !u!1 &1254696618
@@ -764,10 +763,10 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1254696618}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.998, y: 0.998, z: 0.998}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 84961565}
   - {fileID: 167053271}
@@ -777,7 +776,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -148}
+  m_AnchoredPosition: {x: 0, y: -124.75001}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1254696620
@@ -795,7 +794,8 @@ MonoBehaviour:
   maxOffsetX: 200
   maxOffsetY: 15
   maxRotation: 15
-  deckScript: {fileID: 0}
+  deckScript: {fileID: 1029592165}
+  discardScript: {fileID: 1641319678}
   bench: []
 --- !u!1 &1641319676
 GameObject:
@@ -821,12 +821,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1641319676}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -5}
+  m_LocalScale: {x: 0.02004008, y: 0.02004008, z: 0.02004008}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 650511841}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -845,6 +845,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5526243ea76d7c7479a8448a810c8996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  benchScript: {fileID: 1254696620}
+  discardPile: []
 --- !u!1 &1766819569
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,6 +1203,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5188428605410026452, guid: 82c6d072392f65e4487daebbef48b87d, type: 3}
+      propertyPath: rank
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 5188428605410026452, guid: 82c6d072392f65e4487daebbef48b87d, type: 3}
+      propertyPath: isRare
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5188428605410026452, guid: 82c6d072392f65e4487daebbef48b87d, type: 3}
       propertyPath: deckScript
       value: 
       objectReference: {fileID: 1029592165}
@@ -1216,3 +1226,5 @@ SceneRoots:
   - {fileID: 1766819572}
   - {fileID: 650511841}
   - {fileID: 489119119}
+  - {fileID: 1641319677}
+  - {fileID: 1029592164}
