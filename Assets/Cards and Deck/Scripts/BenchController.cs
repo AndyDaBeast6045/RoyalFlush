@@ -76,7 +76,6 @@ public class BenchController : MonoBehaviour
     {
         for (int i = 0; i < bench.Count; i++)
         {
-            Debug.Log(i);
             benchAnchors[i].anchoredPosition3D = CalculateCardPosition(i);
             benchAnchors[i].rotation = Quaternion.Euler(0, 0, CalculateCardRotation(i));
         }
@@ -128,5 +127,11 @@ public class BenchController : MonoBehaviour
             }
         }
         return selectedCards;
+    }
+
+    public void PlayHand()
+    {
+        // for each CardScorer.GetScoringCards(), activate
+        // discard all selected
     }
 }

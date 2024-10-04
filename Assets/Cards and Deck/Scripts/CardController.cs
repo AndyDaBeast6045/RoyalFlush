@@ -11,14 +11,17 @@ public class CardController : MonoBehaviour, System.IComparable
     private BenchController bench;
 
     public enum CardSuit { Clubs, Diamonds, Hearts, Spades };
+    public enum CardType { Attack, Defense, Hybrid };
 
     [SerializeField] private string cardName;
     [SerializeField] private Sprite sprite;
 
     [SerializeField] private char rank; // T represents 10
     [SerializeField] private CardSuit suit;
+    [SerializeField] private CardType cardType;
     [SerializeField] public CardScript cardScript;
     [SerializeField] private bool isRare; // Marked true if rank is J, Q, K, or A
+
 
     private Button button;
     private SpriteRenderer render;
@@ -27,6 +30,7 @@ public class CardController : MonoBehaviour, System.IComparable
 
     [SerializeField]
     public bool selected;
+    
 
     #endregion
 
@@ -35,8 +39,11 @@ public class CardController : MonoBehaviour, System.IComparable
     {
         button = GetComponent<Button>();
         render = GetComponent<SpriteRenderer>();
-        bench = transform.parent.parent.GetComponent<BenchController>();
-        deckScript = bench.GetDeckScript();
+        if (InBench())
+        {
+            bench = transform.parent.parent.GetComponent<BenchController>();
+            deckScript = bench.GetDeckScript();
+        }
     }
 
 
@@ -44,24 +51,50 @@ public class CardController : MonoBehaviour, System.IComparable
     public Sprite GetSprite() { return sprite; }
     public char GetRank() { return rank; }
     public CardSuit GetSuit() { return suit; }
+    public CardType GetCardType() { return cardType; }
     public bool IsRare() { return isRare; }
     #endregion Getters
 
     // Activates the card's effect.
     public void ActivateCard()
     {
-        Debug.Log("Click registered.");
-        //deckScript.DrawCard(); //TEST
-        cardScript.ActivateCard(); // Testing purposes!!
+        cardScript.ActivateCard();
+    }
+
+    public bool InBench()
+    {
+        return transform.parent.parent.GetComponent<BenchController>() != null;
+    }
+
+    void OnMouseEnter()
+    {
+        if (InBench() && !selected)
+        {
+            RaiseCard(30f);
+        }
+    }
+
+    void OnMouseExit()
+    {
+        if (InBench() && !selected)
+        {
+            RaiseCard(-30f);
+        }
     }
 
     public void ToggleSelect()
     {
-        if (bench.GetSelectedCards().Count <= 5)
+        if (InBench() && (!selected && bench.GetSelectedCards().Count < 5) || (selected && bench.GetSelectedCards().Count <= 5))
         {
             selected = !selected;
         }
         // Update display
+    }
+
+    void RaiseCard(float displacement)
+    {
+        RectTransform rect = GetComponent<RectTransform>();
+        rect.localPosition = new Vector3(rect.localPosition.x, rect.localPosition.y + displacement, rect.localPosition.z);
     }
 
     // STATIC METHODS //
