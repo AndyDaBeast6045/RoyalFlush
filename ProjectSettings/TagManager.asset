@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: EnemySpawn
+    uniqueID: 2076749921
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
