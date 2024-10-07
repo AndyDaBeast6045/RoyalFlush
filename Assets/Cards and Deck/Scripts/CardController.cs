@@ -122,6 +122,11 @@ public class CardController : MonoBehaviour, System.IComparable
         throw new ArgumentException("Invalid argument " + rank + " passed to CharRankToIntRank(char rank)!");
     }
 
+    public static int CompareRank(CardController c1, CardController c2)
+    {
+        return CharRankToIntRank(c2.GetRank()) - CharRankToIntRank(c1.GetRank());
+    }
+
     #region C# STUFF!
     int IComparable.CompareTo(object other)
     {
