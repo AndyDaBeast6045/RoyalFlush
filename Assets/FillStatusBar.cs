@@ -33,4 +33,16 @@ public class FillStatusBar : MonoBehaviour
         }
         slider.value = fillValue;
     }
+
+    public void inflictDamage(float damage)
+    {
+        if (damage > playerHealth.currentHealth)
+        {
+            playerHealth.currentHealth = 0;
+        }
+        else
+        {
+            playerHealth.currentHealth -= damage;
+        }
+    }
 }
