@@ -30,6 +30,8 @@ public class CardController : MonoBehaviour, System.IComparable
 
     [SerializeField]
     public bool selected;
+    [SerializeField]
+    public bool scored;
     
 
     #endregion
@@ -58,7 +60,10 @@ public class CardController : MonoBehaviour, System.IComparable
     // Activates the card's effect.
     public void ActivateCard()
     {
-        cardScript.ActivateCard();
+        if (scored)
+        {
+            cardScript.ActivateCard();
+        }
     }
 
     public bool InBench()

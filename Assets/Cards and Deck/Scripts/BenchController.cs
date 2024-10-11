@@ -131,7 +131,19 @@ public class BenchController : MonoBehaviour
 
     public void PlayHand()
     {
-        // for each CardScorer.GetScoringCards(), activate
+        List<CardController> selected = GetSelectedCards();
+        // call activate on all cards, scoring determined in cardcontroller
+        foreach (CardController card in selected)
+        {
+            card.ActivateCard();
+        }
+        for (int i = 0; i < bench.Count; i++)
+        {
+            if (selected.Contains(bench[i]))
+            {
+                discardScript.Discard(i);
+            }
+        }
         // discard all selected
     }
 }

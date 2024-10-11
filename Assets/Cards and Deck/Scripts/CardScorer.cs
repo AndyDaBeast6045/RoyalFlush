@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CardScorer : MonoBehaviour
@@ -14,12 +15,96 @@ public class CardScorer : MonoBehaviour
         hand.Sort();
     }
 
-
-
-    // Applies for pairs, threes, fours, and fives
-    int CheckMatching()
+    public void ScoreHand()
     {
-        throw new System.Exception("not yet implemented");
+        UpdateHand();
+        if (CheckRoyalFlush())
+        {
+            Debug.Log("Royal flush played.");
+            ScoreAllCards(hand);
+            // call effect (additional to straight flush)
+        }
+        if (CheckStraightFlush())
+        {
+            ScoreAllCards(hand);
+            // call effect (additional to straight/flush)
+        }
+        if (CheckStraight())
+        {
+            Debug.Log("Straight played.");
+            ScoreAllCards(hand);
+            // call effect
+        }
+        if (CheckFlush())
+        {
+            Debug.Log("Flush played.");
+            ScoreAllCards(hand);
+            // call effect
+        }
+        if (CheckFullHouse())
+        {
+            Debug.Log("Full House played.");
+            ScoreAllCards(hand);
+            // call effect
+        }
+        if (CheckFourOrFive())
+        {
+            Debug.Log("Four/Five-of-a-kind played.");
+            // call effect
+        }
+    }
+
+    void ScoreAllCards(List<CardController> cards)
+    {
+        foreach (CardController card in cards)
+        {
+            card.scored = true;
+        }
+    }
+
+    bool CheckStraightFlush()
+    {
+        return CheckFlush() && CheckStraight();
+    }
+
+    bool CheckRoyalFlush()
+    {
+        return CheckStraightFlush() && hand[0].GetRank() == 'T' && hand[4].GetRank() == 'A';
+    }
+
+    bool CheckFourOrFive()
+    {
+        if (hand.Count < 4) return false;
+        int rankCount = 1;
+        char rankChecking = hand[0].GetRank();
+        for (int i = 1; i < hand.Count; i++)
+        {
+            if (hand[i].GetRank() == rankChecking)
+            {
+                rankCount++;
+            }
+        }
+        if (rankCount >= 4)
+        {
+            return true;
+        }
+        else if (rankCount == 1)
+        {
+            rankCount = 1;
+            rankChecking = hand[hand.Count - 1].GetRank();
+            for (int i = 1; i < hand.Count; i++)
+            {
+                if (hand[i].GetRank() == rankChecking)
+                {
+                    rankCount++;
+                }
+            }
+            if (rankCount >= 4)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     bool CheckFullHouse()
