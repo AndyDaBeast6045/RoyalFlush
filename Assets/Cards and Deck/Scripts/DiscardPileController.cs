@@ -29,6 +29,9 @@ public class DiscardPileController : MonoBehaviour
     public void Discard(int index)
     {
         CardController card = benchScript.bench[index];
+        card.transform.parent.SetParent(transform, false);
+        card.transform.rotation = Quaternion.Euler(Vector3.zero);
+        card.transform.position = transform.position; 
         discardPile.Add(card);
         benchScript.bench.RemoveAt(index);
     }

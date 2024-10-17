@@ -21,6 +21,7 @@ public class BenchController : MonoBehaviour
 
     [SerializeField]
     public List<CardController> bench;
+    private CardScorer cardScorer;
 
     new RectTransform transform;
 
@@ -45,6 +46,7 @@ public class BenchController : MonoBehaviour
     {
         bench = new List<CardController>();
         transform = GetComponent<RectTransform>();
+        cardScorer = GetComponent<CardScorer>();
         benchAnchors = GetChildren(transform);
         UpdateBench();
         Debug.Log(this);
@@ -74,6 +76,20 @@ public class BenchController : MonoBehaviour
 
     private void DisplayBench()
     {
+        if (bench.Count == 1)
+        {
+            benchAnchors[0].anchoredPosition3D = new Vector3(0f, maxOffsetY, 0f);
+            benchAnchors[0].rotation = Quaternion.Euler(0, 0, 0);
+            return;
+        }
+        if (bench.Count == 2)
+        {
+            benchAnchors[0].anchoredPosition3D = new Vector3(-maxOffsetX, -maxOffsetY, 0f);
+            benchAnchors[0].rotation = Quaternion.Euler(0, 0, CalculateCardRotation(0));
+            benchAnchors[1].anchoredPosition3D = new Vector3(maxOffsetX, -maxOffsetY, 0f);
+            benchAnchors[1].rotation = Quaternion.Euler(0, 0, CalculateCardRotation(1));
+            return;
+        }
         for (int i = 0; i < bench.Count; i++)
         {
             benchAnchors[i].anchoredPosition3D = CalculateCardPosition(i);
@@ -132,6 +148,7 @@ public class BenchController : MonoBehaviour
     public void PlayHand()
     {
         List<CardController> selected = GetSelectedCards();
+        cardScorer.ScoreHand();
         // call activate on all cards, scoring determined in cardcontroller
         foreach (CardController card in selected)
         {
@@ -142,8 +159,9 @@ public class BenchController : MonoBehaviour
             if (selected.Contains(bench[i]))
             {
                 discardScript.Discard(i);
+                i--;
             }
         }
-        // discard all selected
+        UpdateBench();
     }
 }

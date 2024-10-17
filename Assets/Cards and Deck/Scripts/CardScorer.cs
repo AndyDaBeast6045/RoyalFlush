@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -52,6 +53,18 @@ public class CardScorer : MonoBehaviour
             Debug.Log("Four/Five-of-a-kind played.");
             // call effect
         }
+        // duplicates e.g. two-pair
+        ScoreOtherCards();
+
+        //high card when no other hands score
+        for (int i = 0; i < hand.Count; i++)
+        {
+            if (hand[i].scored)
+            {
+                return;
+            }
+        }
+        hand[hand.Count - 1].scored = true;
     }
 
     void ScoreAllCards(List<CardController> cards)
@@ -171,6 +184,22 @@ public class CardScorer : MonoBehaviour
             }
         }
         return flush;
+    }
+
+    /**
+     * Sets cards that have duplicate ranks to be scored. "Other" refers to cards not in a straight, flush, full house, etc.
+     */
+    void ScoreOtherCards()
+    {
+        int[] ranksInHand = new int[5];
+        for (int i = 1; i < hand.Count; i++)
+        {
+            if (hand[i].GetRank() == hand[i-1].GetRank())
+            {
+                hand[i].scored = true;
+                hand[i - 1].scored = true;
+            }
+        }
     }
 
     #region Resonance Effects
