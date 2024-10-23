@@ -7,11 +7,13 @@ using Random = UnityEngine.Random;
 using Quaternion = UnityEngine.Quaternion;
 using System.Numerics;
 
+
 public class Map : MonoBehaviour
 {
-    public Vector2[,] eventSpots = new Vector2[3, 9];
+    public GameObject path;
+    public Vector2[,] eventSpots = new Vector2[3, 10];
     public GameObject[] nodeTypes = new GameObject[7];
-    private bool[,] madeNodes = new bool[3, 9];
+    private bool[,] madeNodes = new bool[3, 10];
 
 
     // Start is called before the first frame update
@@ -22,11 +24,116 @@ public class Map : MonoBehaviour
 
         //Chooses which spaces and events are used/created
         instantiateEvents();
-        
 
-        
+        //Path test code:
+
+        //Problem is that paths need to be instantiated starting at the parent object, not the first instantiated event space
+
+
+        for (int c = 0; c < 9; c++)
+        {
+            for (int r = 0; r < 3; r++)
+            {
+                eventSpots[r, c].x += 1;
+
+                int numNodes = 0;
+                if (nodesInColumn(c) == 1)
+                {
+                    if (madeNodes[r, c] && madeNodes[r, c + 1])
+                    {
+                        GameObject pathInstance = Instantiate(path, eventSpots[r, c], Quaternion.identity);
+                    }
+                    if (madeNodes[r, c] && isInBounds(r - 1) && madeNodes[r - 1, c + 1])
+                    {
+                        GameObject pathInstance = Instantiate(path, new Vector2(eventSpots[r, c].x, eventSpots[r, c].y + 1), transform.rotation * Quaternion.Euler(0f, 0f, 45f));
+                    }
+                    if (madeNodes[r, c] && isInBounds(r + 1) && madeNodes[r + 1, c + 1])
+                    {
+                        GameObject pathInstance = Instantiate(path, new Vector2(eventSpots[r, c].x, eventSpots[r, c].y - 1), transform.rotation * Quaternion.Euler(0f, 0f, -45f));
+                    }
+                }
+                if (nodesInColumn(c) == 2 && nodesInColumn(c + 1) == 3)
+                {
+                    if (madeNodes[r, c] && madeNodes[r, c + 1])
+                    {
+                        GameObject pathInstance = Instantiate(path, eventSpots[r, c], Quaternion.identity);
+                    }
+                    if (madeNodes[r, c] && isInBounds(r - 1) && madeNodes[r - 1, c + 1])
+                    {
+                        GameObject pathInstance = Instantiate(path, new Vector2(eventSpots[r, c].x, eventSpots[r, c].y + 1), transform.rotation * Quaternion.Euler(0f, 0f, 45f));
+                    }
+                    if (madeNodes[r, c] && isInBounds(r + 1) && madeNodes[r + 1, c + 1])
+                    {
+                        GameObject pathInstance = Instantiate(path, new Vector2(eventSpots[r, c].x, eventSpots[r, c].y - 1), transform.rotation * Quaternion.Euler(0f, 0f, -45f));
+                    }
+                }
+                if (nodesInColumn(c) == 2 && nodesInColumn(c + 1) == 2)
+                {
+                    if (madeNodes[r, c] && madeNodes[r, c + 1])
+                    {
+                        GameObject pathInstance = Instantiate(path, eventSpots[r, c], Quaternion.identity);
+                        numNodes++;
+                    }
+                    if (madeNodes[r, c] && isInBounds(r - 1) && madeNodes[r - 1, c + 1])
+                    {
+                        GameObject pathInstance = Instantiate(path, new Vector2(eventSpots[r, c].x, eventSpots[r, c].y + 1), transform.rotation * Quaternion.Euler(0f, 0f, 45f));
+                        numNodes++;
+                    }
+                    if (madeNodes[r, c] && isInBounds(r + 1) && madeNodes[r + 1, c + 1])
+                    {
+                        GameObject pathInstance = Instantiate(path, new Vector2(eventSpots[r, c].x, eventSpots[r, c].y - 1), transform.rotation * Quaternion.Euler(0f, 0f, -45f));
+                    }
+                }
+                else if (madeNodes[r, c] && madeNodes[r, c + 1])
+                {
+                    GameObject pathInstance = Instantiate(path, eventSpots[r, c], Quaternion.identity);
+                }
+                else if (madeNodes[r, c] && isInBounds(r - 1) && madeNodes[r - 1, c + 1])
+                {
+                    GameObject pathInstance = Instantiate(path, new Vector2(eventSpots[r, c].x, eventSpots[r, c].y + 1), transform.rotation * Quaternion.Euler(0f, 0f, 45f));
+                }
+                else if (madeNodes[r, c] && isInBounds(r + 1) && madeNodes[r + 1, c + 1])
+                {
+                    GameObject pathInstance = Instantiate(path, new Vector2(eventSpots[r, c].x, eventSpots[r, c].y - 1), transform.rotation * Quaternion.Euler(0f, 0f, -45f));
+                }
+                
+
+            }
+        }
+
+
+        //Spawns paths from the start node.
+        if (madeNodes[0, 0])
+        {
+            GameObject pathInstance = Instantiate(path, new Vector2(eventSpots[0, 0].x - 2, eventSpots[0, 0].y - 1), transform.rotation * Quaternion.Euler(0f, 0f, 45f));
+        }
+        if (madeNodes[1, 0])
+        {
+            GameObject pathInstance = Instantiate(path, new Vector2(eventSpots[1, 0].x - 2, eventSpots[1, 0].y), Quaternion.identity);
+        }
+        if (madeNodes[2, 0])
+        {
+            GameObject pathInstance = Instantiate(path, new Vector2(eventSpots[2, 0].x - 2, eventSpots[2, 0].y + 1), transform.rotation * Quaternion.Euler(0f, 0f, -45f));
+        }
+
+        //GameObject pathInstance = Instantiate(path, eventSpots[0, 0], Quaternion.identity);
+        //GameObject pathInstance1 = Instantiate(path, new Vector2(eventSpots[1, 0].x, eventSpots[1, 0].y + 1), transform.rotation * Quaternion.Euler(0f, 0f, 45f));
+
+        /*
+        Debug.Log(madeNodes[0, 0]);
+        Debug.Log(madeNodes[0, 1]);
+        Debug.Log(madeNodes[0, 2]);
+        Debug.Log(madeNodes[1, 0]);
+        Debug.Log(madeNodes[1, 1]);
+        Debug.Log(madeNodes[1, 2]);
+        Debug.Log(madeNodes[2, 0]);
+        Debug.Log(madeNodes[2, 1]);
+        Debug.Log(madeNodes[2, 2]);
+        */
+
+
     }
-    
+
 
     // Update is called once per frame
     void Update()
@@ -34,10 +141,26 @@ public class Map : MonoBehaviour
 
     }
 
+    
+
     /*
      * Selects a type of event based off random chance, with battles being far more likely. Change index and corresponding ifs to
      * manipulate probability.
      */
+
+    public int nodesInColumn(int c)
+    {
+        int nodesInCol = 0;
+        for (int i = 0; i < 3; i++)
+        {
+            if (madeNodes[i, c])
+            {
+                nodesInCol++;
+            }
+        }
+        return nodesInCol;
+    }
+
     public GameObject selectNodeType()
     {
         int index = Random.Range(0, 15);
@@ -136,19 +259,19 @@ public class Map : MonoBehaviour
      * Creates a 2d array of x and y coordinates on which to potentially spawn events.
      */
     public void setPossibleNodeCoords()
-    {
-        int baseX = (int)transform.position.x + 2;
-        int baseY = (int)transform.position.y + 2;
-        for (int c = 0; c < 9; c++)
+    { // +2
+        double baseX = transform.position.x + 1.65;
+        double baseY = transform.position.y + 2;
+        for (int c = 0; c < 10; c++)
         {
             for (int r = 0; r < 3; r++)
             {
-                eventSpots[r, c] = new Vector2(baseX, baseY);
+                eventSpots[r, c] = new Vector2((float) baseX,(float) baseY);
                 baseY = baseY - 2;
 
             }
-            baseX = baseX + 2;
-            baseY = (int)transform.position.y + 2;
+            baseX = baseX + 1.65;
+            baseY = transform.position.y + 2;
         }
     }
 
@@ -159,19 +282,38 @@ public class Map : MonoBehaviour
     public void instantiateEvents()
     {
         int index = 1;
-        GameObject eventInstance = Instantiate(selectNodeType(), eventSpots[index, 0], Quaternion.identity);
-        madeNodes[1, 0] = true;
+        //GameObject eventInstance = Instantiate(selectNodeType(), eventSpots[index, 0], Quaternion.identity);
+        //madeNodes[1, 0] = true;
         bool[] previousNodes = new bool[] { false, true, false };
+        //Above was changed.
 
-
-        for (int c = 1; c < 9; c++)
+        for (int c = 0; c < 9; c++)
         {
-            index = Random.Range(0, 3);
-            int numNodeSelector = Random.Range(0, 4);
+            //Creates a boolean 2d array of spawned events
+            /*
+            for (int i = 0; i < 3; i++)
+            {
+                //c-1
+                madeNodes[i, c] = previousNodes[i];
+            }
+            */
+
+            //index = Random.Range(0, 3);
+
+            int numNodeSelector;
+            if (c != 0)
+            {
+                numNodeSelector = Random.Range(0, 4);
+            } else
+            {
+                numNodeSelector = Random.Range(1, 4);
+            }
+
             if (numNodeSelector == 0) //Instantiate 1 node
             {
                 int singleIndex = checkPossibleSingleNode(previousNodes);
-                GameObject event1Instance = Instantiate(selectNodeType(), eventSpots[singleIndex, c], Quaternion.identity);
+                GameObject event1Instance = Instantiate(selectNodeType(), eventSpots[singleIndex, c], Quaternion.identity) as GameObject;
+
                 previousNodes = new bool[] { false, false, false };
                 previousNodes[singleIndex] = true;
 
@@ -210,9 +352,27 @@ public class Map : MonoBehaviour
                 }
             }
 
-        }
+            //Debug.Log(previousNodes[0]);
+            //Debug.Log(previousNodes[1]);
+            //Debug.Log(previousNodes[2]);
+            for (int i = 0; i < 3; i++)
+            {
+                //c-1
+                madeNodes[i, c] = previousNodes[i];
+            }
+            
 
-        GameObject eventInstance3 = Instantiate(nodeTypes[6], new Vector2((int)transform.position.x + 20, 0), Quaternion.identity);
+        }
+        //Creates the boss event node
+        GameObject eventInstance3 = Instantiate(nodeTypes[6], new Vector2(2, -4), Quaternion.identity);
+
+        
+        for (int i = 0; i < 3; i++)
+        {
+            madeNodes[i, 8] = previousNodes[i];
+        }
+        madeNodes[1, 9] = true;
+        
     }
     /*
      * retired methods that might be of use later.
@@ -238,7 +398,7 @@ public class Map : MonoBehaviour
 
         return possibleNodes;
     }
-
+    */
     public bool isInBounds(int index)
     {
         if (index > 2 || index < 0)
@@ -249,5 +409,5 @@ public class Map : MonoBehaviour
             return true;
         }
     }
-    */
+   
 }
