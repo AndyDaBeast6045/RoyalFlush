@@ -38,7 +38,7 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: EnemySpawn
+  - name: BackgroundSpawns
     uniqueID: 2076749921
     locked: 0
   - name: Default
