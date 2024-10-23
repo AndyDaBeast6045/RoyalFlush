@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class BenchController : MonoBehaviour
 {
+    [SerializeField]
     int baseBenchSize; // Changes with passive items
+    [SerializeField]
     int thisCombatBenchSize; // Changes with Full House plays
     List<RectTransform> benchAnchors;
 
@@ -50,6 +52,12 @@ public class BenchController : MonoBehaviour
         benchAnchors = GetChildren(transform);
         UpdateBench();
         Debug.Log(this);
+    }
+
+    private void Start()
+    {
+        thisCombatBenchSize = baseBenchSize;
+        RefillBench();
     }
 
     public override string ToString()
@@ -161,6 +169,17 @@ public class BenchController : MonoBehaviour
                 discardScript.Discard(i);
                 i--;
             }
+        }
+        UpdateBench();
+        RefillBench();
+    }
+
+    public void RefillBench()
+    {
+        int cardsToDraw = thisCombatBenchSize - bench.Count;
+        for (int i = 0; i < cardsToDraw; i++)
+        {
+            deckScript.DrawCard();
         }
         UpdateBench();
     }

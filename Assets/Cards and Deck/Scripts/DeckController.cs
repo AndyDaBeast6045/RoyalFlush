@@ -22,6 +22,11 @@ public class DeckController : MonoBehaviour
     void Start()
     {
         InitiatePlayDeck();
+        List<RectTransform> children = BenchController.GetChildren(GetComponent<RectTransform>());
+        foreach (RectTransform r in children)
+        {
+            deck.Add(r.GetComponent<CardController>());
+        }
     }
 
     // Adds every card from the fullDeck to the playing deck, then shuffles.

@@ -1454,6 +1454,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6efd9578b55e0e1418ddb374dfadfec9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseBenchSize: 7
+  thisCombatBenchSize: 0
   maxOffsetX: 200
   maxOffsetY: 15
   maxRotation: 15

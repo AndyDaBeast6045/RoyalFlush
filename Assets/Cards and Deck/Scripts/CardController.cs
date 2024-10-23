@@ -71,7 +71,7 @@ public class CardController : MonoBehaviour, System.IComparable
     {
         return transform.parent.parent.GetComponent<BenchController>() != null;
     }
-    /*
+    
     void OnMouseEnter()
     {
         if (InBench() && !selected)
@@ -104,7 +104,7 @@ public class CardController : MonoBehaviour, System.IComparable
         RectTransform rect = GetComponent<RectTransform>();
         rect.localPosition = new Vector3(rect.localPosition.x, rect.localPosition.y + displacement, rect.localPosition.z);
     }
-    */
+    
 
     // STATIC METHODS //
     public static int CharRankToIntRank(char rank)
