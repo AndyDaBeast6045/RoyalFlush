@@ -10,7 +10,7 @@ public class CurrencyController : MonoBehaviour
     public int CheckChips()
     {
         return chips;
-        Debug.Log("Chips: " + chips);
+        //Debug.Log("Chips: " + chips);
     }
 
     // Add chips to player's possession
