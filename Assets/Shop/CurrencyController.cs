@@ -9,8 +9,9 @@ public class CurrencyController : MonoBehaviour
     // Used to show how many chips the player has in possession
     public int CheckChips()
     {
-        return chips;
         Debug.Log("Chips: " + chips);
+        return chips;
+        
     }
 
     // Add chips to player's possession
