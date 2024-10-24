@@ -22,10 +22,16 @@ public class DeckController : MonoBehaviour
     void Start()
     {
         InitiatePlayDeck();
+        UpdateDeck();
+    }
+
+    public void UpdateDeck()
+    {
+        deck.Clear();
         List<RectTransform> children = BenchController.GetChildren(GetComponent<RectTransform>());
         foreach (RectTransform r in children)
         {
-            deck.Add(r.GetComponent<CardController>());
+            deck.Add(r.GetComponentInChildren<CardController>());
         }
     }
 
@@ -33,10 +39,9 @@ public class DeckController : MonoBehaviour
     // Call at the start of combat, and when reshuffling after drawing all of the cards in the deck.
     public void InitiatePlayDeck()
     {
-        for (int i = 0; i < fullDeck.Count; i++)
+        for (int i = 0; i < discardPile.discardPile.Count; i++)
         {
-            if (!benchScript.bench.Contains(fullDeck[i]))
-                deck.Add(fullDeck[i]);
+            discardPile.discardPile[i].transform.parent.SetParent(transform);
         }
         ShuffleDeck();
     }
@@ -65,6 +70,7 @@ public class DeckController : MonoBehaviour
             deck[m] = deck[n];
             deck[n] = temp;
         }
+        UpdateDeck();
     }
 
     // Draws the topmost card to the bench, removing it from the playing deck. Refreshes deck if it's empty.
@@ -73,11 +79,13 @@ public class DeckController : MonoBehaviour
     {
         if (deck.Count == 0)
         {
+            Debug.Log("Reshuffling");
             InitiatePlayDeck();
             discardPile.ClearDiscardPile();
         }
         CardController card = benchScript.AddToBench(deck[0]);
         deck.RemoveAt(0);
+        UpdateDeck();
         return card;
     }
 }

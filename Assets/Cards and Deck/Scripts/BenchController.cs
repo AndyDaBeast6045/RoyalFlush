@@ -4,6 +4,21 @@ using UnityEngine;
 
 public class BenchController : MonoBehaviour
 {
+    /*[SerializeField]
+    int defaultBenchMax;
+    public int currentBenchMax;
+    List<Transform> cardSlots = new List<Transform>();
+
+    public void StartCombat()
+    {
+        currentBenchMax = defaultBenchMax;
+
+        for (int i = 0; i < currentBenchMax; i++)
+        {
+            cardSlots.Add();
+        }
+    }*/
+
     [SerializeField]
     int baseBenchSize; // Changes with passive items
     [SerializeField]
@@ -82,7 +97,7 @@ public class BenchController : MonoBehaviour
 
     public DeckController GetDeckScript() { return deckScript; }
 
-    private void DisplayBench()
+    /*private void DisplayBench()
     {
         if (bench.Count == 1)
         {
@@ -130,11 +145,11 @@ public class BenchController : MonoBehaviour
     {
         float zRotation = Mathf.Lerp(maxRotation, -maxRotation, index / (bench.Count - 1f));
         return zRotation;
-    }
+    }*/
 
     public CardController AddToBench(CardController card)
     {
-        card.transform.SetParent(transform);
+        card.transform.parent.SetParent(transform, false);
         bench.Add(card);
         UpdateBench();
         return card;

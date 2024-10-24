@@ -8,7 +8,7 @@ public class DiscardPileController : MonoBehaviour
     BenchController benchScript;
 
     [SerializeField]
-    List<CardController> discardPile;
+    public List<CardController> discardPile;
 
     // Start is called before the first frame update
     void Start()
