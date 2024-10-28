@@ -18,7 +18,7 @@ public class ClickToDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     float pointerUpTime;
     float pointerDownTime;
 
-    public bool selected;
+    public bool selected; // true once card has been dragged onto a target
     public float selectionOffset;
 
     [HideInInspector] public UnityEvent<ClickToDrag> PointerEnterEvent;
@@ -60,6 +60,11 @@ public class ClickToDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     public void OnBeginDrag(PointerEventData eventData) 
     {
         BeginDragEvent.Invoke(this);
+        if (selected)
+        {
+            selected = false; 
+            // cancel targeting
+        }
         Vector2 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         fromMouse = (Vector2) transform.position - mouse;
         isDragging = true;

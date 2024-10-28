@@ -145,6 +145,8 @@ GameObject:
   - component: {fileID: 329382492031336243}
   - component: {fileID: 8290970038400857977}
   - component: {fileID: 1968093009545141588}
+  - component: {fileID: -5884976928042794329}
+  - component: {fileID: 4421804161259268972}
   m_Layer: 5
   m_Name: 2 of Clubs
   m_TagString: Untagged
@@ -194,9 +196,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: 2 of Clubs
   sprite: {fileID: 21300000, guid: 646e71393a7ae934ebb97843a116f2dc, type: 3}
-  rank: 50
+  rank: 65
   suit: 0
-  cardType: 0
+  cardType: 1
   cardScript: {fileID: 11400000, guid: 3e6900f1a1d42bd4a8ccacce80f1a81b, type: 2}
   isRare: 0
   selected: 0
@@ -298,3 +300,68 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 112, y: 172}
   m_EdgeRadius: 0
+--- !u!114 &-5884976928042794329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7961150399525961117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bef13d8e9c005b84a86c5e1aa32b8ff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeedLimit: 100
+  selected: 0
+  selectionOffset: 0
+  PointerEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  PointerExitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  PointerUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  PointerDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  BeginDragEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  EndDragEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  SelectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &4421804161259268972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7961150399525961117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7961150399525961117}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2

@@ -28,10 +28,15 @@ public class DeckController : MonoBehaviour
     public void UpdateDeck()
     {
         deck.Clear();
-        List<RectTransform> children = BenchController.GetChildren(GetComponent<RectTransform>());
-        foreach (RectTransform r in children)
+        //List<RectTransform> children = BenchController.GetChildren(GetComponent<RectTransform>());
+        //foreach (RectTransform r in children)
+        //{
+        //    deck.Add(r.GetComponentInChildren<CardController>());
+        //}
+        CardController[] cardControllers = GetComponentsInChildren<CardController>();
+        foreach (CardController cardController in cardControllers)
         {
-            deck.Add(r.GetComponentInChildren<CardController>());
+            deck.Add(cardController);
         }
     }
 

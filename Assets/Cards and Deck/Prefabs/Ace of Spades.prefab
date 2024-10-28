@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 5988695428209561125}
   - component: {fileID: 4324746146923148185}
   - component: {fileID: 3805013638102442468}
+  - component: {fileID: -2777355621376476649}
+  - component: {fileID: 5042887641282837269}
   m_Layer: 5
   m_Name: Ace of Spades
   m_TagString: Untagged
@@ -62,7 +64,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Ace of Spades
   sprite: {fileID: 21300000, guid: 493e556afd420b5428873f1fe156310c, type: 3}
-  rank: 50
+  rank: 65
   suit: 3
   cardType: 2
   cardScript: {fileID: 11400000, guid: 3e6900f1a1d42bd4a8ccacce80f1a81b, type: 2}
@@ -166,6 +168,55 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 112, y: 172}
   m_EdgeRadius: 0
+--- !u!114 &-2777355621376476649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4334807681514602997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bef13d8e9c005b84a86c5e1aa32b8ff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeedLimit: 100
+  selected: 0
+  selectionOffset: 0
+  PointerEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  PointerExitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  PointerUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  PointerDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  BeginDragEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  EndDragEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  SelectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &5042887641282837269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4334807681514602997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &6966358885978265288
 GameObject:
   m_ObjectHideFlags: 0
