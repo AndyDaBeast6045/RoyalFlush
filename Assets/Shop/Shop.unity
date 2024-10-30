@@ -395,7 +395,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -247.49992, y: 80}
-  m_SizeDelta: {x: 0, y: 160}
+  m_SizeDelta: {x: 20, y: 160}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1095645613
 MonoBehaviour:
@@ -875,14 +875,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 988b3d6f4acb19e4dbdd6f602e0f0f1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shopCardPrefab: {fileID: 162907119455312291, guid: eded6e4cea7a2594e85c173bfb70175e, type: 3}
   normalShop: {fileID: 1095645612}
+  normalCardPool: []
+  rareCardPool: []
+  itemPool: []
   normalCardShop: []
   rareCardShop: []
+  itemShop: []
   normalCardShopSize: 4
   rareCardShopSize: 1
-  allCards: {fileID: 11400000, guid: 17d92ae881229a843836e27d145f5e61, type: 2}
-  deck: {fileID: 0}
+  itemShopSize: 0
 --- !u!4 &1687964125
 Transform:
   m_ObjectHideFlags: 0

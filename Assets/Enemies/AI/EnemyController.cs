@@ -8,10 +8,13 @@ public abstract class EnemyController : MonoBehaviour
     [SerializeField] private int enemyMaxHealth;
     [SerializeField] private int enemyCurrentHealth;
     [SerializeField] private Attack[] attackPool;
+    [SerializeField] private GameObject telegraph;
+    [SerializeField] private Object[] telegraphTextures;
 
     // Start is called before the first frame update
     void Start()
     {
+        telegraphTextures = Resources.LoadAll("Enemy/AttackTelegraphs",typeof(Texture2D));
         Reset();
     }
 
@@ -25,7 +28,7 @@ public abstract class EnemyController : MonoBehaviour
         return enemyCurrentHealth;
     }
 
-    public void DamageEnemy(int damage)
+    public void Damage(int damage)
     {
         enemyCurrentHealth -= damage;
         if (enemyCurrentHealth <= 0)
@@ -34,7 +37,7 @@ public abstract class EnemyController : MonoBehaviour
         }
     }
 
-    public void HealEnemy(int healing)
+    public void Heal(int healing)
     {
         enemyCurrentHealth += healing;
         if (enemyCurrentHealth > enemyMaxHealth)
@@ -46,6 +49,14 @@ public abstract class EnemyController : MonoBehaviour
     public void Reset()
     {
         enemyCurrentHealth = enemyMaxHealth;
+    }
+
+    public void TelegraphAttack(int attackPoolIndex)
+    {
+        Attack.AttackType attackType = attackPool[attackPoolIndex].GetAttackType();
+        Texture2D telegraphSprite = telegraphTextures[0];
+        var spriteRenderer = telegraph.GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = Sprite.Create(telegraphSprite, Rect(0,0,10,10), Vector2.zero);
     }
 
     public Attack GetAttack(int attackPoolIndex)
