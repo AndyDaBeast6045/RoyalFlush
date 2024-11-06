@@ -7,8 +7,8 @@ public class DamageAttack : Attack
 {
     [SerializeField] private int damage;
 
-    override public void UseAttack()
+    override public int GetAttackValue()
     {
-        Debug.Log(GetAttackName() + " has been used, dealing " + damage + " damage.");
+        return damage;
     }
 }

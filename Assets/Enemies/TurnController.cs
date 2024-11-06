@@ -8,7 +8,7 @@ public class TurnController : MonoBehaviour
     [SerializeField] private Turn CurrentTurn;
     [SerializeField] private int TurnCounter;
 
-    void Start()
+    public void Reset()
     {
         CurrentTurn = Turn.turnstart;
         TurnCounter = 0;
@@ -22,6 +22,11 @@ public class TurnController : MonoBehaviour
     public int GetTurnCounter()
     {
         return TurnCounter;
+    }
+
+    public void SetTurn(Turn turn)
+    {
+        CurrentTurn = turn;
     }
 
     public void Next()

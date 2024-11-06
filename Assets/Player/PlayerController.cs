@@ -6,6 +6,9 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private int playerMaxHealth;
     [SerializeField] private int playerCurrentHealth;
+    [SerializeField] private Sprite playerSprite;
+    [SerializeField] private Sprite deathSprite;
+    [SerializeField] private bool alive;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +19,11 @@ public class PlayerController : MonoBehaviour
     public int GetMaxHealth()
     {
         return playerMaxHealth;
+    }
+
+    public bool GetAlive()
+    {
+        return alive;
     }
 
     public int GetHealth()
@@ -35,11 +43,14 @@ public class PlayerController : MonoBehaviour
 
     public void Reset()
     {
+        GetComponent<SpriteRenderer>().sprite = playerSprite;
+        alive = true;
         playerCurrentHealth = playerMaxHealth;
     }
 
     public void Death()
     {
-
+        GetComponent<SpriteRenderer>().sprite = deathSprite;
+        Debug.Log("YOU DIED");
     }
 }

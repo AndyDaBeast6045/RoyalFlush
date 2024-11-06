@@ -8,7 +8,7 @@ public abstract class Attack : ScriptableObject
     [SerializeField] private AttackType Type;
     [SerializeField] private string attackName;
 
-    public abstract void UseAttack();
+    public abstract int GetAttackValue();
 
     public AttackType GetAttackType()
     {
