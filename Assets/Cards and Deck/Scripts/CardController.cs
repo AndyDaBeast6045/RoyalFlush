@@ -30,6 +30,8 @@ public class CardController : MonoBehaviour, System.IComparable
 
     [SerializeField]
     public bool selected;
+    [SerializeField]
+    public bool scored;
     
 
     #endregion
@@ -58,7 +60,10 @@ public class CardController : MonoBehaviour, System.IComparable
     // Activates the card's effect.
     public void ActivateCard()
     {
-        cardScript.ActivateCard();
+        if (scored)
+        {
+            cardScript.ActivateCard();
+        }
     }
 
     public bool InBench()
@@ -120,6 +125,11 @@ public class CardController : MonoBehaviour, System.IComparable
                 break;
         }
         throw new ArgumentException("Invalid argument " + rank + " passed to CharRankToIntRank(char rank)!");
+    }
+
+    public static int CompareRank(CardController c1, CardController c2)
+    {
+        return CharRankToIntRank(c2.GetRank()) - CharRankToIntRank(c1.GetRank());
     }
 
     #region C# STUFF!
