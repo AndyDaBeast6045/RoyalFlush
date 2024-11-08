@@ -4,34 +4,19 @@ using UnityEngine;
 
 public class volume : MonoBehaviour
 {
-    [SerializeField] private Slider musicSlider;
+    [SerializeField] private AudioMixer audioMixer;
 
-
-    private void Start()
+    public void setMasterVolume(float level)
     {
-
-        if (PlayerPrefs.HasKey("volume"))
-        {
-            loadVolume();
-        }
-        else
-        {
-            PlayerPrefs.SetFloat("volume", 1);
-            loadVolume();
-        }
+        audioMixer.SetFloat("masterVolume", Mathf.Log10(level)*20f);
     }
-    public void setVolume()
+    public void setMusicVolume(float level)
     {
-        AudioListener.volume = musicSlider.value;
+        audioMixer.SetFloat("musicVolume", Mathf.Log10(level) * 20f);
+    }
+    public void setSFXVolume(float level)
+    {
+        audioMixer.SetFloat("sfxVolume", Mathf.Log10(level)*20f);
     }
 
-    public void saveVolume()
-    {
-        PlayerPrefs.SetFloat("volume", musicSlider.value);
-    }
-
-    public void loadVolume()
-    {
-        musicSlider.value = PlayerPrefs.GetFloat("volume");
-    }
 }
