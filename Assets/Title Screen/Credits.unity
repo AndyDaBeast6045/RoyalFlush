@@ -1173,8 +1173,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 974549780}
-        m_TargetAssemblyTypeName: ExitButton, Assembly-CSharp
-        m_MethodName: backToMainMenu
+        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+        m_MethodName: Return
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

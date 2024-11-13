@@ -1,36 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CombatController : MonoBehaviour
 {
+    //Internal Variables
+    [SerializeField] private GameObject[] enemyList;
+    [SerializeField] private Encounter[] encounterList;
+    [SerializeField] private int encounterIndex;
+    [SerializeField] private Transform[] enemyPositions;
+    [SerializeField] private GameObject[] encounterEnemies;
+
     //External Variables
-    [SerializeField] PlayerController playerObject;
-    [SerializeField] TurnController turnControllerObject;
-    [SerializeField] GameObject[] enemyList;
+    private PlayerController playerControllerObject;
+    private TurnController turnControllerObject;
+    private CardController cardControllerObject;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerObject = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-        turnControllerObject = GameObject.FindWithTag("TurnController").GetComponent<TurnController>();
+        playerControllerObject = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        turnControllerObject = GameObject.FindGameObjectWithTag("TurnController").GetComponent<TurnController>();
+        cardControllerObject = GameObject.FindGameObjectWithTag("CardController").GetComponent<CardController>();
+        encounterIndex = MainManager.Instance.nextEncounter;
+        encounterEnemies = encounterList[encounterIndex].GetEnemies();
+        for (int i = 0; i < encounterEnemies.Length; i++)
+        {
+            Instantiate(encounterEnemies[i], enemyPositions[i]);
+        }
         enemyList = GameObject.FindGameObjectsWithTag("Enemy");
+        turnControllerObject.Reset();
         Next();
     }
 
-    // Update is called once per frame
-    public void ActionUpdate()
+    void Update()
     {
-        if (playerObject.GetHealth() <= 0)
+        enemyList = GameObject.FindGameObjectsWithTag("Enemy");
+        if (enemyList.Length == 0)
         {
-            playerObject.Death();
+            Victory();
         }
+    }
+
+    public void AreaDamage(int damage)
+    {
         for (int i = 0; i < enemyList.Length; i++)
         {
-            if (enemyList[i].GetComponent<EnemyController>().GetHealth() <= 0)
-            {
-                enemyList[i].GetComponent<EnemyController>().Death();
-            }
+            enemyList[i].GetComponent<EnemyController>().Damage(damage);
         }
     }
 
@@ -42,6 +59,9 @@ public class CombatController : MonoBehaviour
                 Next();
                 break;
             case TurnController.Turn.PlayerTurn:
+                playerControllerObject.ResetShield();
+                cardControllerObject.ClearHand();
+                cardControllerObject.DrawHand();
                 for (int i = 0; i < enemyList.Length; i++)
                 {
                     enemyList[i].GetComponent<EnemyController>().PlayerTurnStart();
@@ -51,7 +71,6 @@ public class CombatController : MonoBehaviour
                 for (int i = 0; i < enemyList.Length; i++)
                 {
                     enemyList[i].GetComponent<EnemyController>().EnemyTurnStart();
-                    ActionUpdate();
                 }
                 Next();
                 break;
@@ -66,5 +85,12 @@ public class CombatController : MonoBehaviour
     {
         turnControllerObject.Next();
         TurnUpdate();
+    }
+
+    public void Victory()
+    {
+        MainManager.Instance.playerCurrentHealth = playerControllerObject.GetHealth();
+        MainManager.Instance.nextEncounter = (int)Random.Range(1,3);
+        SceneManager.LoadScene(3);
     }
 }

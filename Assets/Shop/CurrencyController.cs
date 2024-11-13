@@ -6,6 +6,14 @@ public class CurrencyController : MonoBehaviour
 {
     [SerializeField] private int chips = 0;
 
+    void Start()
+    {
+        if (MainManager.Instance != null)
+        {
+            chips = MainManager.Instance.chips;
+        }
+    }
+
     // Used to show how many chips the player has in possession
     public int CheckChips()
     {
