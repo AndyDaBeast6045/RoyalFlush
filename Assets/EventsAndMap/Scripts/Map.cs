@@ -10,10 +10,17 @@ using System.Numerics;
 
 public class Map : MonoBehaviour
 {
+    public GameObject[,] madeEventSpots = new GameObject[3, 20];
+    //public int[,] instanceIds = new int[3, 10];
+    public bool[,,] findNextNodes = new bool[3, 10, 3];
     public GameObject path;
     public Vector2[,] eventSpots = new Vector2[3, 10];
     public GameObject[] nodeTypes = new GameObject[7];
+
+
     private bool[,] madeNodes = new bool[3, 10];
+    public Vector2[,] eventSpotsCopy = new Vector2[3, 10];
+    
 
 
     // Start is called before the first frame update
@@ -36,20 +43,23 @@ public class Map : MonoBehaviour
             {
                 eventSpots[r, c].x += 1;
 
-                int numNodes = 0;
+                //int numNodes = 0;
                 if (nodesInColumn(c) == 1)
                 {
                     if (madeNodes[r, c] && madeNodes[r, c + 1])
                     {
                         GameObject pathInstance = Instantiate(path, eventSpots[r, c], Quaternion.identity);
+                        findNextNodes[r, c, r] = true;
                     }
                     if (madeNodes[r, c] && isInBounds(r - 1) && madeNodes[r - 1, c + 1])
                     {
                         GameObject pathInstance = Instantiate(path, new Vector2(eventSpots[r, c].x, eventSpots[r, c].y + 1), transform.rotation * Quaternion.Euler(0f, 0f, 45f));
+                        findNextNodes[r, c, r - 1] = true;
                     }
                     if (madeNodes[r, c] && isInBounds(r + 1) && madeNodes[r + 1, c + 1])
                     {
                         GameObject pathInstance = Instantiate(path, new Vector2(eventSpots[r, c].x, eventSpots[r, c].y - 1), transform.rotation * Quaternion.Euler(0f, 0f, -45f));
+                        findNextNodes[r, c, r + 1] = true;
                     }
                 }
                 if (nodesInColumn(c) == 2 && nodesInColumn(c + 1) == 3)
@@ -57,14 +67,17 @@ public class Map : MonoBehaviour
                     if (madeNodes[r, c] && madeNodes[r, c + 1])
                     {
                         GameObject pathInstance = Instantiate(path, eventSpots[r, c], Quaternion.identity);
+                        findNextNodes[r, c, r] = true;
                     }
                     if (madeNodes[r, c] && isInBounds(r - 1) && madeNodes[r - 1, c + 1])
                     {
                         GameObject pathInstance = Instantiate(path, new Vector2(eventSpots[r, c].x, eventSpots[r, c].y + 1), transform.rotation * Quaternion.Euler(0f, 0f, 45f));
+                        findNextNodes[r, c, r - 1] = true;
                     }
                     if (madeNodes[r, c] && isInBounds(r + 1) && madeNodes[r + 1, c + 1])
                     {
                         GameObject pathInstance = Instantiate(path, new Vector2(eventSpots[r, c].x, eventSpots[r, c].y - 1), transform.rotation * Quaternion.Euler(0f, 0f, -45f));
+                        findNextNodes[r, c, r + 1] = true;
                     }
                 }
                 if (nodesInColumn(c) == 2 && nodesInColumn(c + 1) == 2)
@@ -72,29 +85,35 @@ public class Map : MonoBehaviour
                     if (madeNodes[r, c] && madeNodes[r, c + 1])
                     {
                         GameObject pathInstance = Instantiate(path, eventSpots[r, c], Quaternion.identity);
-                        numNodes++;
+                        findNextNodes[r, c, r] = true;
+                        //numNodes++;
                     }
                     if (madeNodes[r, c] && isInBounds(r - 1) && madeNodes[r - 1, c + 1])
                     {
                         GameObject pathInstance = Instantiate(path, new Vector2(eventSpots[r, c].x, eventSpots[r, c].y + 1), transform.rotation * Quaternion.Euler(0f, 0f, 45f));
-                        numNodes++;
+                        findNextNodes[r, c, r - 1] = true;
+                        //numNodes++;
                     }
                     if (madeNodes[r, c] && isInBounds(r + 1) && madeNodes[r + 1, c + 1])
                     {
                         GameObject pathInstance = Instantiate(path, new Vector2(eventSpots[r, c].x, eventSpots[r, c].y - 1), transform.rotation * Quaternion.Euler(0f, 0f, -45f));
+                        findNextNodes[r, c, r + 1] = true;
                     }
                 }
                 else if (madeNodes[r, c] && madeNodes[r, c + 1])
                 {
                     GameObject pathInstance = Instantiate(path, eventSpots[r, c], Quaternion.identity);
+                    findNextNodes[r, c, r] = true;
                 }
                 else if (madeNodes[r, c] && isInBounds(r - 1) && madeNodes[r - 1, c + 1])
                 {
                     GameObject pathInstance = Instantiate(path, new Vector2(eventSpots[r, c].x, eventSpots[r, c].y + 1), transform.rotation * Quaternion.Euler(0f, 0f, 45f));
+                    findNextNodes[r, c, r - 1] = true;
                 }
                 else if (madeNodes[r, c] && isInBounds(r + 1) && madeNodes[r + 1, c + 1])
                 {
                     GameObject pathInstance = Instantiate(path, new Vector2(eventSpots[r, c].x, eventSpots[r, c].y - 1), transform.rotation * Quaternion.Euler(0f, 0f, -45f));
+                    findNextNodes[r, c, r + 1] = true;
                 }
                 
 
@@ -130,6 +149,29 @@ public class Map : MonoBehaviour
         Debug.Log(madeNodes[2, 1]);
         Debug.Log(madeNodes[2, 2]);
         */
+
+        //Debug.Log("0: " +madeEventSpots[0, 0]);
+        //Debug.Log("1: " +madeEventSpots[0, 1]);
+        //Debug.Log("2: " +madeEventSpots[0, 2]);
+        Debug.Log("Row 0, Col 0; next col row 0? " + findNextNodes[0, 0, 0] + " next col row 1? " + findNextNodes[0, 0, 1]);
+        Debug.Log(madeNodes[0, 0]);
+        Debug.Log(madeNodes[1, 0]);
+        Debug.Log(madeNodes[2, 0]);
+        Debug.Log(madeNodes[0, 1]);
+        Debug.Log(madeNodes[1, 1]);
+        Debug.Log(madeNodes[2, 1]);
+        Debug.Log(madeNodes[0, 2]);
+        Debug.Log(madeNodes[1, 2]);
+        Debug.Log(madeNodes[2, 2]);
+        for (int r = 0; r < 3; r++)
+        {
+            if (madeNodes[r, 0])
+            {
+                Debug.Log(r);
+                madeEventSpots[r, 0].GetComponent<BoxCollider2D>().enabled = true;
+                madeEventSpots[r, 0].GetComponent<BoxCollider2D>().enabled = true;
+            }
+        }
 
 
     }
@@ -266,7 +308,7 @@ public class Map : MonoBehaviour
         {
             for (int r = 0; r < 3; r++)
             {
-                eventSpots[r, c] = new Vector2((float) baseX,(float) baseY);
+                eventSpots[r, c] = new Vector2((float)baseX, (float)baseY);
                 baseY = baseY - 2;
 
             }
@@ -285,6 +327,7 @@ public class Map : MonoBehaviour
         //GameObject eventInstance = Instantiate(selectNodeType(), eventSpots[index, 0], Quaternion.identity);
         //madeNodes[1, 0] = true;
         bool[] previousNodes = new bool[] { false, true, false };
+        GameObject spawnedEvent;
         //Above was changed.
 
         for (int c = 0; c < 9; c++)
@@ -306,13 +349,14 @@ public class Map : MonoBehaviour
                 numNodeSelector = Random.Range(0, 4);
             } else
             {
-                numNodeSelector = Random.Range(1, 4);
+                numNodeSelector = 3;
             }
 
             if (numNodeSelector == 0) //Instantiate 1 node
             {
                 int singleIndex = checkPossibleSingleNode(previousNodes);
-                GameObject event1Instance = Instantiate(selectNodeType(), eventSpots[singleIndex, c], Quaternion.identity) as GameObject;
+                spawnedEvent = Instantiate(selectNodeType(), eventSpots[singleIndex, c], Quaternion.identity);
+                madeEventSpots[singleIndex, c] = spawnedEvent;
 
                 previousNodes = new bool[] { false, false, false };
                 previousNodes[singleIndex] = true;
@@ -322,8 +366,10 @@ public class Map : MonoBehaviour
             else if (numNodeSelector == 1 || numNodeSelector == 2) //Instantiate 2 node
             {
                 int[] ints = checkPossibleDoubleNode(previousNodes);
-                GameObject event2Instance = Instantiate(selectNodeType(), eventSpots[ints[0], c], Quaternion.identity);
-                GameObject eventI3nstance = Instantiate(selectNodeType(), eventSpots[ints[1], c], Quaternion.identity);
+                spawnedEvent = Instantiate(selectNodeType(), eventSpots[ints[0], c], Quaternion.identity);
+                spawnedEvent = Instantiate(selectNodeType(), eventSpots[ints[1], c], Quaternion.identity);
+                madeEventSpots[ints[0], c] = spawnedEvent;
+                madeEventSpots[ints[1], c] = spawnedEvent;
 
                 previousNodes = new bool[] { false, false, false };
                 previousNodes[ints[0]] = true;
@@ -336,15 +382,18 @@ public class Map : MonoBehaviour
                 {
                     for (int i = 0; i < 3; i++)
                     {
-                        GameObject event4Instance = Instantiate(selectNodeType(), eventSpots[i, c], Quaternion.identity);
+                        spawnedEvent = Instantiate(selectNodeType(), eventSpots[i, c], Quaternion.identity);
+                        madeEventSpots[i, c] = spawnedEvent;
                     }
                     previousNodes = new bool[] { true, true, true }; //Not exactly what's happening but equivalent
                 }
                 else //If 3 nodes aren't possible, create 2
                 {
                     int[] ints = checkPossibleDoubleNode(previousNodes);
-                    GameObject event5Instance = Instantiate(selectNodeType(), eventSpots[ints[0], c], Quaternion.identity);
-                    GameObject event6Instance = Instantiate(selectNodeType(), eventSpots[ints[1], c], Quaternion.identity);
+                    spawnedEvent = Instantiate(selectNodeType(), eventSpots[ints[0], c], Quaternion.identity);
+                    spawnedEvent = Instantiate(selectNodeType(), eventSpots[ints[1], c], Quaternion.identity);
+                    madeEventSpots[ints[0], c] = spawnedEvent;
+                    madeEventSpots[ints[1], c] = spawnedEvent;
 
                     previousNodes = new bool[] { false, false, false };
                     previousNodes[ints[0]] = true;
@@ -365,6 +414,9 @@ public class Map : MonoBehaviour
         }
         //Creates the boss event node
         GameObject eventInstance3 = Instantiate(nodeTypes[6], new Vector2(2, -4), Quaternion.identity);
+
+        spawnedEvent = Instantiate(nodeTypes[6], eventSpots[1, 9], Quaternion.identity);
+        madeEventSpots[1, 9] = spawnedEvent;
 
         
         for (int i = 0; i < 3; i++)
@@ -409,5 +461,98 @@ public class Map : MonoBehaviour
             return true;
         }
     }
-   
+
+    public GameObject[,] getMadeEventSpots()
+    {
+        return madeEventSpots;
+    }
+
+    /*
+     * Use Vector2 eventNodes to cross reference event transform.positions to get r and c values. 
+     * 
+     * 
+     */
+    /*
+     * Pass in the row and column of the player's current node and next available nodes will
+     * become clickable.
+     * (int r, int c)
+     */
+    public void manageNodes(float xValue, float yValue)
+    {
+        Debug.Log("called");
+        /*
+        if (madeEventSpots[2, 0] != null)
+        {
+            Debug.Log("true");
+        }
+        */
+
+        setPossibleNodeCoords();
+
+        //Needed because of offset because of the difference between eventSpots[] values and actual coords
+        //xValue = xValue + 6.85f;
+        //yValue = yValue - 2f;
+
+        int row = -1;
+        int col = -1;
+
+        //int idValue = GetInstanceID();
+
+        //Debug.Log("ID: " + idValue);
+        //Debug.Log("ID: " + madeEventSpots[0, 0].GetInstanceID());
+        //Debug.Log("x: " + xValue);
+        //Debug.Log("y: " + yValue);
+        //Debug.Log("Array x: " + eventSpots[2, 0].x);
+        //Debug.Log("Array y: " + eventSpots[2, 0].y);
+
+        for (int c = 0; c < 10; c++)
+        {
+            for (int r = 0; r < 3; r++)
+            {
+                if (eventSpots[r, c].x == xValue && eventSpots[r, c].y == yValue)
+                {
+                    Debug.Log("found r and c: " +r+ ", " +c);
+                    col = c;
+                    row = r;
+                }
+            }
+        }
+
+        Debug.Log("Row: " + row);
+        Debug.Log("Col: " + col);
+
+        for (int p = 0; p < 3; p++)
+        {
+            if (findNextNodes[row, col, p])
+            {
+                Debug.Log("Made row " + p + ", col " + (col + 1) + "hitbox");
+                madeEventSpots[p, col + 1].GetComponent<BoxCollider2D>().enabled = true;
+            }
+            if (madeNodes[p, col])
+            {
+                madeEventSpots[p, col].GetComponent<BoxCollider2D>().enabled = false;
+            }
+        }
+
+        /*
+        for (int c = 0; c < 9; c++)
+        {
+            for (int r = 0; r < 3; r++)
+            {
+                if (instanceIds[r, c] == idValue)
+                {
+                    for (int p = 0; p < 3; p++)
+                    {
+                        if (findNextNodes[r, c, p])
+                        {
+                            madeEventSpots[p, c + 1].GetComponent<BoxCollider2D>().enabled = true;
+                        }
+                        madeEventSpots[p, c].GetComponent<BoxCollider2D>().enabled = false;
+                    }
+                }
+            }
+        }
+        */
+
+    }
 }
