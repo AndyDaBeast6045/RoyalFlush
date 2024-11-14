@@ -13,10 +13,9 @@ public class Map : MonoBehaviour
     public GameObject[,] madeEventSpots = new GameObject[3, 20];
     //public int[,] instanceIds = new int[3, 10];
     public bool[,,] findNextNodes = new bool[3, 10, 3];
-    public GameObject path;
+    [SerializeField] public GameObject path;
     public Vector2[,] eventSpots = new Vector2[3, 10];
-    public GameObject[] nodeTypes = new GameObject[7];
-
+    public GameObject[] nodeTypes = new GameObject[8];
 
     private bool[,] madeNodes = new bool[3, 10];
     public Vector2[,] eventSpotsCopy = new Vector2[3, 10];
@@ -140,20 +139,31 @@ public class Map : MonoBehaviour
 
         /*
         Debug.Log(madeNodes[0, 0]);
-        Debug.Log(madeNodes[0, 1]);
-        Debug.Log(madeNodes[0, 2]);
         Debug.Log(madeNodes[1, 0]);
-        Debug.Log(madeNodes[1, 1]);
-        Debug.Log(madeNodes[1, 2]);
         Debug.Log(madeNodes[2, 0]);
+        Debug.Log(madeNodes[0, 1]);
+        Debug.Log(madeNodes[1, 1]);
         Debug.Log(madeNodes[2, 1]);
+        Debug.Log(madeNodes[0, 2]);
+        Debug.Log(madeNodes[1, 2]);
         Debug.Log(madeNodes[2, 2]);
+        Debug.Log(madeNodes[0, 3]);
+        Debug.Log(madeNodes[1, 3]);
+        Debug.Log(madeNodes[2, 3]);
+        Debug.Log(madeNodes[0, 4]);
+        Debug.Log(madeNodes[1, 4]);
+        Debug.Log(madeNodes[2, 4]);
+        Debug.Log(madeNodes[0, 5]);
+        Debug.Log(madeNodes[1, 5]);
+        Debug.Log(madeNodes[2, 5]);
         */
+
 
         //Debug.Log("0: " +madeEventSpots[0, 0]);
         //Debug.Log("1: " +madeEventSpots[0, 1]);
         //Debug.Log("2: " +madeEventSpots[0, 2]);
-        Debug.Log("Row 0, Col 0; next col row 0? " + findNextNodes[0, 0, 0] + " next col row 1? " + findNextNodes[0, 0, 1]);
+        //Debug.Log("Row 0, Col 0; next col row 0? " + findNextNodes[0, 0, 0] + " next col row 1? " + findNextNodes[0, 0, 1]);
+        /*
         Debug.Log(madeNodes[0, 0]);
         Debug.Log(madeNodes[1, 0]);
         Debug.Log(madeNodes[2, 0]);
@@ -163,15 +173,42 @@ public class Map : MonoBehaviour
         Debug.Log(madeNodes[0, 2]);
         Debug.Log(madeNodes[1, 2]);
         Debug.Log(madeNodes[2, 2]);
+        */
+
+
         for (int r = 0; r < 3; r++)
         {
-            if (madeNodes[r, 0])
+             if (madeNodes[r, 0])
+             {
+                //Debug.Log(r);
+                madeEventSpots[r, 0].GetComponent<BoxCollider2D>().enabled = true;
+                //madeEventSpots[r, 0].GetComponent<BoxCollider2D>().enabled = true;
+             }
+        }
+
+        //Proves madeNodes and madeEventSpots match
+        /*
+        //madeNodes[0, 9] = true;
+        for (int c = 0; c < 10; c++)
+        {
+            for (int r = 0; r < 3; r++)
             {
-                Debug.Log(r);
-                madeEventSpots[r, 0].GetComponent<BoxCollider2D>().enabled = true;
-                madeEventSpots[r, 0].GetComponent<BoxCollider2D>().enabled = true;
+                if (madeNodes[r, c] == true && madeEventSpots[r, c] != null)
+                {
+                    Debug.Log("true");
+                }
+                else if (madeNodes[r, c] == false && madeEventSpots[r, c] == null)
+                {
+                    Debug.Log("true");
+                }
+                else
+                {
+                    Debug.Log("false");
+                }
             }
         }
+        */
+        
 
 
     }
@@ -205,7 +242,7 @@ public class Map : MonoBehaviour
 
     public GameObject selectNodeType()
     {
-        int index = Random.Range(0, 15);
+        int index = Random.Range(0, 17);
 
         if (index < 10)
         {
@@ -230,6 +267,10 @@ public class Map : MonoBehaviour
         else if (index == 14)
         {
             return nodeTypes[5];
+        }
+        else
+        {
+            return nodeTypes[7];
         }
 
         return null;
@@ -366,9 +407,10 @@ public class Map : MonoBehaviour
             else if (numNodeSelector == 1 || numNodeSelector == 2) //Instantiate 2 node
             {
                 int[] ints = checkPossibleDoubleNode(previousNodes);
+                Debug.Log("Should be different: " + ints[0] + " and " + ints[1]);
                 spawnedEvent = Instantiate(selectNodeType(), eventSpots[ints[0], c], Quaternion.identity);
-                spawnedEvent = Instantiate(selectNodeType(), eventSpots[ints[1], c], Quaternion.identity);
                 madeEventSpots[ints[0], c] = spawnedEvent;
+                spawnedEvent = Instantiate(selectNodeType(), eventSpots[ints[1], c], Quaternion.identity);
                 madeEventSpots[ints[1], c] = spawnedEvent;
 
                 previousNodes = new bool[] { false, false, false };
@@ -390,9 +432,10 @@ public class Map : MonoBehaviour
                 else //If 3 nodes aren't possible, create 2
                 {
                     int[] ints = checkPossibleDoubleNode(previousNodes);
+                    Debug.Log("Should be different2: " +ints[0]+ " and " + ints[1]);
                     spawnedEvent = Instantiate(selectNodeType(), eventSpots[ints[0], c], Quaternion.identity);
-                    spawnedEvent = Instantiate(selectNodeType(), eventSpots[ints[1], c], Quaternion.identity);
                     madeEventSpots[ints[0], c] = spawnedEvent;
+                    spawnedEvent = Instantiate(selectNodeType(), eventSpots[ints[1], c], Quaternion.identity);
                     madeEventSpots[ints[1], c] = spawnedEvent;
 
                     previousNodes = new bool[] { false, false, false };

@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class TitleButton : MonoBehaviour
 {
-    [SerializeField]private GameObject image;
+    [SerializeField] private GameObject image;
     [SerializeField] private GameObject image2;
 
     public void Start()

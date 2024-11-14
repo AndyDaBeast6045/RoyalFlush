@@ -4,7 +4,7 @@ using UnityEngine.UI;
 //using UnityEngine.EventSystems;
 using System.Collections;
 using System.Numerics;
-
+using UnityEngine.SceneManagement;
 using Vector3 = UnityEngine.Vector3;
 
 public class SceneChanger : MonoBehaviour
@@ -12,6 +12,7 @@ public class SceneChanger : MonoBehaviour
     public GameObject eventHead;
     public Sprite newSprite;
     private Sprite ogSprite;
+    private AsyncOperation asyncLoad;
     /*
      * Specific event x coords:
      * Map: 0
@@ -40,12 +41,24 @@ public class SceneChanger : MonoBehaviour
     public void battleClick()
     {
         //cam.transform.position = new Vector3(27f, 0f, -10f);
-        Camera.main.transform.position = new Vector3(29f, 0f, -10f);
+        //Camera.main.transform.position = new Vector3(29f, 0f, -10f);
         
         //Debug.Log("Battle Node was pressed.");
         //Camera.main.transform.position = new Vector3(47f, 0f, -10f);
     
         eventHead.GetComponent<Map>().manageNodes(transform.position.x, transform.position.y);
+        asyncLoad = SceneManager.LoadSceneAsync("Combat");
+        asyncLoad.allowSceneActivation = true;
+
+        /*
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+        */
+
+
+
         //enemySpawner.GetComponent<EnemySpawner>().spawnEnemies(enemySpawner.GetComponent<EnemySpawner>().difficultyLevel);
     }
 
