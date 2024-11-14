@@ -47,7 +47,7 @@ public abstract class EnemyController : MonoBehaviour
         cardControllerObject = GameObject.FindWithTag("CardController").GetComponent<CardController>();
         combatControllerObject = GameObject.FindWithTag("CombatController").GetComponent<CombatController>();
         burnCount = 0;
-        telegraphObject.GetComponent<SpriteRenderer>().sprite = null;
+        //telegraphObject.GetComponent<SpriteRenderer>().sprite = null;
         enemyMaxHealth = (int)(enemyMaxHealth * Random.Range(0.8f, 1.2f));
         enemyCurrentHealth = enemyMaxHealth;
         enemyShield = 0;
