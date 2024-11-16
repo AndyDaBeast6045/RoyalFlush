@@ -10,9 +10,10 @@ using Vector3 = UnityEngine.Vector3;
 public class SceneChanger : MonoBehaviour
 {
     public GameObject eventHead;
-    public Sprite newSprite;
-    private Sprite ogSprite;
-    private AsyncOperation asyncLoad;
+    public Sprite newColor;
+    private Color ogColor;
+
+    //private AsyncOperation asyncLoad;
     /*
      * Specific event x coords:
      * Map: 0
@@ -27,7 +28,7 @@ public class SceneChanger : MonoBehaviour
 
     void Start()
     {
-        ogSprite = GetComponent<SpriteRenderer>().sprite;
+        ogColor = GetComponent<SpriteRenderer>().color;
     }
 
     //Method for each event type. Clicking on an event node will move the camera to the event scene.
@@ -47,8 +48,10 @@ public class SceneChanger : MonoBehaviour
         //Camera.main.transform.position = new Vector3(47f, 0f, -10f);
     
         eventHead.GetComponent<Map>().manageNodes(transform.position.x, transform.position.y);
-        asyncLoad = SceneManager.LoadSceneAsync("Combat");
-        asyncLoad.allowSceneActivation = true;
+        SceneManager.LoadScene("Combat", LoadSceneMode.Additive);
+
+        //asyncLoad = SceneManager.LoadSceneAsync("Combat");
+        //asyncLoad.allowSceneActivation = true;
 
         /*
         while (!asyncLoad.isDone)
@@ -97,13 +100,14 @@ public class SceneChanger : MonoBehaviour
         Camera.main.transform.position = new Vector3(29f, 0f, -10f);
     }
 
+    //Aesthetic map methods
     public void changeToHoverSprite()
     {
-        GetComponent<SpriteRenderer>().sprite = newSprite;
+        GetComponent<SpriteRenderer>().color = Color.grey;
     }
 
     public void changeToOGSprite()
     {
-        GetComponent<SpriteRenderer>().sprite = ogSprite;
+        GetComponent<SpriteRenderer>().color = ogColor;
     }
 }

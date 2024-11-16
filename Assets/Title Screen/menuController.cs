@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class MenuController : MonoBehaviour
 {
     private CardReferences cardReferences;
+    public GameObject mapManager;
 
     public void Start()
     {
@@ -66,6 +67,9 @@ public class MenuController : MonoBehaviour
 
     public void PlayGame()
     {
+        //Loads map
+        //Scene eandm = SceneManager.GetSceneAt(0);
+        //SceneManager.GetSceneAt(0).EventSpace.GetComponent<Map>().newMap();
         SceneManager.LoadScene(4);
     }
 
