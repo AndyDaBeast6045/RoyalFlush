@@ -213,15 +213,6 @@ public class Map : MonoBehaviour
 
     }
 
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    
-
     /*
      * Selects a type of event based off random chance, with battles being far more likely. Change index and corresponding ifs to
      * manipulate probability.
@@ -272,8 +263,6 @@ public class Map : MonoBehaviour
         {
             return nodeTypes[7];
         }
-
-        return null;
     }
 
     /*
@@ -364,7 +353,6 @@ public class Map : MonoBehaviour
      */
     public void instantiateEvents()
     {
-        int index = 1;
         //GameObject eventInstance = Instantiate(selectNodeType(), eventSpots[index, 0], Quaternion.identity);
         //madeNodes[1, 0] = true;
         bool[] previousNodes = new bool[] { false, true, false };
@@ -455,9 +443,8 @@ public class Map : MonoBehaviour
             
 
         }
-        //Creates the boss event node
-        GameObject eventInstance3 = Instantiate(nodeTypes[6], new Vector2(2, -4), Quaternion.identity);
 
+        //Creates the boss event node
         spawnedEvent = Instantiate(nodeTypes[6], eventSpots[1, 9], Quaternion.identity);
         madeEventSpots[1, 9] = spawnedEvent;
 
