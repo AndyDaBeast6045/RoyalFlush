@@ -28,6 +28,7 @@ public class CombatController : MonoBehaviour
     [SerializeField] private TMP_Text currentTurn;
     [SerializeField] private GameObject endTurnButton;
     [SerializeField] private CombatMusicController combatMusicController;
+    [SerializeField] private GameObject trueVictoryCanvas;
 
 
     // Start is called before the first frame update
@@ -56,7 +57,14 @@ public class CombatController : MonoBehaviour
         if ((enemyList.Length == 0) && (isVictory == false))
         {
             isVictory = true;
-            Victory();
+            if (MainManager.Instance.finalBattle)
+            {
+                FinalVictory();
+            }
+            else
+            {
+                Victory();
+            }
         }
     }
 
@@ -136,5 +144,10 @@ public class CombatController : MonoBehaviour
     {
         combatMusicController.Defeat();
         defeatCanvas.SetActive(true);
+    }
+
+    public void FinalVictory()
+    {
+        trueVictoryCanvas.SetActive(true);
     }
 }

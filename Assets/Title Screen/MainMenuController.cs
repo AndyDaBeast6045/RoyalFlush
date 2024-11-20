@@ -18,6 +18,7 @@ public class MainMenuController : MonoBehaviour
             MainManager.Instance.chips = 500;
             MainManager.Instance.chipsMultiplier = 1.0;
             MainManager.Instance.nextEncounter = 0;
+            MainManager.Instance.finalBattle = false;
             MainManager.Instance.deck = new List<CardObject>();
             MainManager.Instance.deck.Add(cardReferences.GetCard(CardObject.CardRank.Ace, CardObject.CardSuit.Spade));
             MainManager.Instance.deck.Add(cardReferences.GetCard(CardObject.CardRank.Two, CardObject.CardSuit.Spade));

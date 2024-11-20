@@ -519,9 +519,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5693070651091273388}
   - component: {fileID: 5614047096106571873}
-  - component: {fileID: 2500078987478136907}
   - component: {fileID: 5958808859984877297}
   - component: {fileID: 1149287945555294986}
+  - component: {fileID: 7332010781734361313}
   m_Layer: 0
   m_Name: Smough
   m_TagString: Enemy
@@ -538,7 +538,7 @@ Transform:
   m_GameObject: {fileID: 3827753316694811240}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -599,52 +599,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2500078987478136907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3827753316694811240}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4fe25bcb4b9e93439ac24f0079167f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyName: Smough
-  enemyMaxHealth: 100
-  enemyCurrentHealth: 100
-  enemyShield: 0
-  burnCount: 0
-  attackChoiceIndex: 0
-  isDead: 0
-  nextTurnTrigger: 0
-  sfxType: 0
-  telegraphObject: {fileID: 6314733865087443593}
-  telegraphTextures:
-  - {fileID: 21300000, guid: fa7fb9330e0f23743b93c64bf5d3732c, type: 3}
-  - {fileID: 21300000, guid: 89325b29733594a4eb11c59af8796905, type: 3}
-  - {fileID: 21300000, guid: e33423fdedede0646a9ed6973244337f, type: 3}
-  - {fileID: 21300000, guid: 3f1b5298e5576b64c88b80f160dcdfde, type: 3}
-  - {fileID: 21300000, guid: 4c8d8fa57cea31b4fa2766f90aa7f680, type: 3}
-  - {fileID: 21300000, guid: c59f3f77945408a4a8baa4d6e4b9a795, type: 3}
-  - {fileID: 21300000, guid: 47cd1646b82d5094f8f200186e002ef8, type: 3}
-  - {fileID: 21300000, guid: b9390e25f7ea0ea4398ee5c0bafd2bfc, type: 3}
-  attackPool:
-  - {fileID: 11400000, guid: 89f0cc1ea6d26a74b83f937d1eaccb38, type: 2}
-  - {fileID: 11400000, guid: edf9ef018bc8a684ca509d0bf279ec48, type: 2}
-  - {fileID: 11400000, guid: 5ce7b701b93bf2245adbb4a6838fe653, type: 2}
-  attackName: {fileID: 5758323585228901660}
-  specialValue: {fileID: 7682912569928356832}
-  attackValue: {fileID: 7513758715336131017}
-  healthBar: {fileID: 5149125707184218937}
-  healthBarValue: {fileID: 2563978719033673589}
-  shieldBar: {fileID: 2365896182572014620}
-  shieldBarValue: {fileID: 8742281787076670254}
-  burnBar: {fileID: 3182371220855735396}
-  burnBarValue: {fileID: 697313747006903221}
-  pointerObject: {fileID: 5821270319341764054}
-  objectAnimator: {fileID: 5958808859984877297}
 --- !u!95 &5958808859984877297
 Animator:
   serializedVersion: 5
@@ -655,7 +609,7 @@ Animator:
   m_GameObject: {fileID: 3827753316694811240}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fe79dfbd1670b8e47a077585c2da38e0, type: 2}
+  m_Controller: {fileID: 9100000, guid: d09c49cb510f23c47840808272bf2a9c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -702,7 +656,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.266667, y: 4.266667}
+    oldSize: {x: 5.12, y: 5.12}
     newSize: {x: 3.18, y: 1.8}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -711,6 +665,53 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.2, y: 2.2}
   m_EdgeRadius: 0
+--- !u!114 &7332010781734361313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3827753316694811240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04ffa57ead448674faaa898c116c032a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyName: Smough
+  enemyMaxHealth: 1000
+  enemyCurrentHealth: 1000
+  enemyShield: 0
+  burnCount: 0
+  attackChoiceIndex: 0
+  isDead: 0
+  nextTurnTrigger: 0
+  sfxType: 0
+  telegraphObject: {fileID: 6314733865087443593}
+  telegraphTextures:
+  - {fileID: 21300000, guid: fa7fb9330e0f23743b93c64bf5d3732c, type: 3}
+  - {fileID: 21300000, guid: 89325b29733594a4eb11c59af8796905, type: 3}
+  - {fileID: 21300000, guid: e33423fdedede0646a9ed6973244337f, type: 3}
+  - {fileID: 21300000, guid: 3f1b5298e5576b64c88b80f160dcdfde, type: 3}
+  - {fileID: 21300000, guid: 4c8d8fa57cea31b4fa2766f90aa7f680, type: 3}
+  - {fileID: 21300000, guid: c59f3f77945408a4a8baa4d6e4b9a795, type: 3}
+  - {fileID: 21300000, guid: 47cd1646b82d5094f8f200186e002ef8, type: 3}
+  - {fileID: 21300000, guid: b9390e25f7ea0ea4398ee5c0bafd2bfc, type: 3}
+  attackPool:
+  - {fileID: 11400000, guid: 5ce7b701b93bf2245adbb4a6838fe653, type: 2}
+  - {fileID: 11400000, guid: cdccf31aca3e81348b6ca1d31b632ee9, type: 2}
+  - {fileID: 11400000, guid: b497c1d409b90d640bfd6a2eed6d2a5b, type: 2}
+  - {fileID: 11400000, guid: e05ef1f7ae31dab4cbb88eb936d99ec3, type: 2}
+  attackName: {fileID: 5758323585228901660}
+  specialValue: {fileID: 7682912569928356832}
+  attackValue: {fileID: 7513758715336131017}
+  healthBar: {fileID: 5149125707184218937}
+  healthBarValue: {fileID: 2563978719033673589}
+  shieldBar: {fileID: 2365896182572014620}
+  shieldBarValue: {fileID: 8742281787076670254}
+  burnBar: {fileID: 3182371220855735396}
+  burnBarValue: {fileID: 697313747006903221}
+  pointerObject: {fileID: 5821270319341764054}
+  objectAnimator: {fileID: 5958808859984877297}
 --- !u!1 &5149125707184218937
 GameObject:
   m_ObjectHideFlags: 0
@@ -1127,7 +1128,7 @@ Transform:
   m_GameObject: {fileID: 5821270319341764054}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 0, y: -1.66, z: 0}
+  m_LocalPosition: {x: 0, y: -2.4, z: 0}
   m_LocalScale: {x: 0.43, y: 0.43, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1307,7 +1308,7 @@ Transform:
   m_GameObject: {fileID: 6314733865087443593}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.03, y: 1.55, z: 0}
+  m_LocalPosition: {x: 0, y: 2.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1809,7 +1810,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0.9}
-  m_SizeDelta: {x: 2.2, y: 5.5}
+  m_SizeDelta: {x: 2.2, y: 7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &175311946012683624
 Canvas:

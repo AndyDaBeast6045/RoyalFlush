@@ -252,6 +252,10 @@ public class Map : MonoBehaviour
         }
         
         int index = Random.Range(0, 17);
+        if (numOfEvents > 6)
+        {
+            index = 1;
+        }
         if (c == 1 || c== 2)
         {
             index = Random.Range(0, 14);

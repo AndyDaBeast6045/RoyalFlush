@@ -9,7 +9,6 @@ using Vector3 = UnityEngine.Vector3;
 
 public class SceneChanger : MonoBehaviour
 {
-    public GameObject mainManager;
     public GameObject eventHead;
 
     public GameObject background;
@@ -40,13 +39,6 @@ public class SceneChanger : MonoBehaviour
         //cam.transform.position = new Vector3(0f, 0f, -10f);'
         Camera.main.transform.position = new Vector3(8.25f, 0f, -10f);
     }
-    /*
-    public void shopClick()
-    {
-        eventHead.GetComponent<Map>().manageNodes(transform.position.x, transform.position.y);
-        SceneManager.LoadScene("Shop", LoadSceneMode.Additive);
-    }
-    */
 
     public void battleClick()
     {
@@ -125,11 +117,11 @@ public class SceneChanger : MonoBehaviour
 
     public void manInSuit2()
     {
-        expoText.GetComponent<TMPro.TextMeshProUGUI>().text = "\"Give up 10 hitpoints and I'll reward you with 30 chips. \nNot too shabby an offer, huh!\"";
+        expoText.GetComponent<TMPro.TextMeshProUGUI>().text = "\"Give up 200 health and I'll reward you with 1000 chips. \nNot too shabby an offer, huh!\"";
         GameObject.Find("Canvas/RouletteBut1/Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = "Accept";
         GameObject.Find("Canvas/RouletteBut2/Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = "Ignore";
         image.GetComponent<Image>().sprite = secondSprite;
-        if (mainManager.GetComponent<MainManager>().getHP() <= 10)
+        if (MainManager.Instance.playerCurrentHealth < 200)
         {
             but1.SetActive(false);
         }
@@ -143,10 +135,10 @@ public class SceneChanger : MonoBehaviour
     {
         enableUI();
         expoText.GetComponent<TMPro.TextMeshProUGUI>().text = "At your wits ends, you see the familiar neon glow of the casino's snack bars. \nTake a seat, or spend your hard-earned earnings for a medium heal and a random card.";
-        GameObject.Find("Canvas/RouletteBut1/Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = "Small Heal";
-        GameObject.Find("Canvas/RouletteBut2/Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = "Spend 50 Chips";
+        GameObject.Find("Canvas/RouletteBut1/Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = "Rest (Heal 50)";
+        GameObject.Find("Canvas/RouletteBut2/Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = "Spend 200 Chips (Heal 100)";
         image.GetComponent<Image>().sprite = toilet;
-        if (mainManager.GetComponent<MainManager>().getChips() < 50)
+        if (MainManager.Instance.chips <= 200)
         {
             but2.SetActive(false);
         }
@@ -164,8 +156,8 @@ public class SceneChanger : MonoBehaviour
         enableUI();
         expoText.GetComponent<TMPro.TextMeshProUGUI>().text = "Turning the corner, the welcome sight of a porcelain throne greets your eyes. You may rest here, or relieve yourself of a great burden.";
         //GameObject but1Text = GameObject.Find("Canvas/RouletteBut1/Text (TMP)");
-        GameObject.Find("Canvas/RouletteBut1/Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = "-1 Cards";
-        GameObject.Find("Canvas/RouletteBut2/Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = "Small Heal";
+        GameObject.Find("Canvas/RouletteBut1/Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = "Lose 1 Card";
+        GameObject.Find("Canvas/RouletteBut2/Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = "Relax (Heal 50)";
         image.GetComponent<Image>().sprite = toilet;
         but1.GetComponentInChildren<Button>().onClick.RemoveAllListeners();
         but1.GetComponentInChildren<Button>().onClick.AddListener(delegate { but1.GetComponent<ButtonContr>().loseACard(); });
@@ -180,7 +172,7 @@ public class SceneChanger : MonoBehaviour
     {
         enableUI();
         expoText.GetComponent<TMPro.TextMeshProUGUI>().text = "As you venture on, a large man you recognize you recognize as a bouncer blocks your path. In a dark, burly voice he bellows:\n\"Pay the fee or pay the price!\"";
-        GameObject.Find("Canvas/RouletteBut1/Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = "Pay 50 Chips";
+        GameObject.Find("Canvas/RouletteBut1/Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = "Pay 250 Chips";
         GameObject.Find("Canvas/RouletteBut2/Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = "Fight!";
         Debug.Log("uh bounce");
         image.GetComponent<Image>().sprite = toilet;
@@ -196,18 +188,9 @@ public class SceneChanger : MonoBehaviour
     public void miniBossClick()
     {
         //Replace '5' with hypothetical miniboss encounter
-        mainManager.GetComponent<MainManager>().changeEncounter(5);
+        MainManager.Instance.finalBattle = true;
+        MainManager.Instance.nextEncounter = 4;
         SceneManager.LoadScene("Combat", LoadSceneMode.Additive);
-        SceneManager.UnloadSceneAsync("EventsAndMap");
-
-    }
-
-    public void finalBossClick()
-    {
-        //Replace '6' with hypothetical final boss encounter
-        mainManager.GetComponent<MainManager>().changeEncounter(6);
-        SceneManager.LoadScene("Combat", LoadSceneMode.Additive);
-        SceneManager.UnloadSceneAsync("EventsAndMap");
     }
 
     //Aesthetic map methods

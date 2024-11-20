@@ -42,7 +42,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: db01377b22966834bb70bc450e1769d7, type: 2}
+  m_Motion: {fileID: 7400000, guid: 933141983adb0084a8e10dbd54a4bf0b, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -230,7 +230,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: ed076ea64b090e54ba1ed63e61261cd2, type: 2}
+  m_Motion: {fileID: 7400000, guid: e1ec23b94ecf6ab4e81525cb9de3c3d6, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -267,7 +267,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ChipSlimeAnimationController
+  m_Name: SmoughAnimator
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: TeleSwitch
@@ -336,7 +336,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ChipSlimeAnimation
+  m_Name: Default
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -403,7 +403,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 9cbd8e0d7cc6809439693dd8436b396d, type: 2}
+  m_Motion: {fileID: 7400000, guid: c03ba7b95518b5846b316c2ac1d0eb46, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -456,7 +456,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: adfffe7c119e24241b32cd2631a0dbf7, type: 2}
+  m_Motion: {fileID: 7400000, guid: 9c6d01aff5714794d8d95b907b043c67, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

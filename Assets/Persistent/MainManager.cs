@@ -14,6 +14,7 @@ public class MainManager : MonoBehaviour
     public int playerHandSize;
     public int nextEncounter;
     public List<CardObject> deck;
+    public bool finalBattle;
 
     private void Awake()
     {
@@ -24,50 +25,5 @@ public class MainManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-    }
-
-    public void changeChips(int chipChange)
-    {
-        chips += chipChange;
-        if (chips < 0)
-        {
-            chips = 0;
-        }
-    }
-
-    public void changeHealth(int health)
-    {
-        playerCurrentHealth += health;
-        if (playerCurrentHealth > playerMaxHealth)
-        {
-            playerCurrentHealth = playerMaxHealth;
-        }
-    }
-
-    public void loseACardFromDeck()
-    {
-        int randomNum = Random.Range(0, deck.Count);
-        deck.RemoveAt(randomNum);
-    }
-
-    //Adds a random card to the player's deck
-    public void gainACard()
-    {
-        //uhhhhhhh
-    }
-
-    public void changeEncounter(int num)
-    {
-        nextEncounter = num;
-    }
-
-    public int getHP()
-    {
-        return playerCurrentHealth;
-    }
-
-    public int getChips()
-    {
-        return chips;
     }
 }
