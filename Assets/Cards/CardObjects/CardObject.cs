@@ -34,4 +34,11 @@ public class CardObject : ScriptableObject
     {
         return cardSprite;
     }
+
+    
+    public void changeSuit(CardSuit newSuit)
+    {
+        cardSuit = newSuit;
+
+    }
 }

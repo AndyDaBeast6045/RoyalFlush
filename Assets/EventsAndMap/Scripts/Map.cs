@@ -10,21 +10,33 @@ using System.Numerics;
 
 public class Map : MonoBehaviour
 {
+
+    public Sprite playerSprite;
     public GameObject[,] madeEventSpots = new GameObject[3, 20];
     //public int[,] instanceIds = new int[3, 10];
     public bool[,,] findNextNodes = new bool[3, 10, 3];
     [SerializeField] public GameObject path;
     public Vector2[,] eventSpots = new Vector2[3, 10];
-    public GameObject[] nodeTypes = new GameObject[8];
+    public GameObject[] nodeTypes = new GameObject[9];
 
     private bool[,] madeNodes = new bool[3, 10];
     public Vector2[,] eventSpotsCopy = new Vector2[3, 10];
+
+    public static int amountOfShops;
+    public static int numOfEvents;
+    public static int mapNum;
     
-
-
-    // Start is called before the first frame update
     void Start()
     {
+        mapNum = 1;
+        createMap();
+    }
+
+    // Start is called before the first frame update
+    public void createMap()
+    {
+        amountOfShops = 0;
+        numOfEvents = 0;
         //Creates a 3x9 grid of x and y coordinates to potentially spawn nodes on.
         setPossibleNodeCoords();
 
@@ -40,7 +52,7 @@ public class Map : MonoBehaviour
         {
             for (int r = 0; r < 3; r++)
             {
-                eventSpots[r, c].x += 1;
+                eventSpots[r, c].x += .8f;
 
                 //int numNodes = 0;
                 if (nodesInColumn(c) == 1)
@@ -85,13 +97,11 @@ public class Map : MonoBehaviour
                     {
                         GameObject pathInstance = Instantiate(path, eventSpots[r, c], Quaternion.identity);
                         findNextNodes[r, c, r] = true;
-                        //numNodes++;
                     }
                     if (madeNodes[r, c] && isInBounds(r - 1) && madeNodes[r - 1, c + 1])
                     {
                         GameObject pathInstance = Instantiate(path, new Vector2(eventSpots[r, c].x, eventSpots[r, c].y + 1), transform.rotation * Quaternion.Euler(0f, 0f, 45f));
                         findNextNodes[r, c, r - 1] = true;
-                        //numNodes++;
                     }
                     if (madeNodes[r, c] && isInBounds(r + 1) && madeNodes[r + 1, c + 1])
                     {
@@ -185,6 +195,8 @@ public class Map : MonoBehaviour
                 //madeEventSpots[r, 0].GetComponent<BoxCollider2D>().enabled = true;
              }
         }
+        //Map is Done!
+        mapNum++;
 
         //Proves madeNodes and madeEventSpots match
         /*
@@ -231,38 +243,59 @@ public class Map : MonoBehaviour
         return nodesInCol;
     }
 
-    public GameObject selectNodeType()
+    public GameObject selectNodeType(int c)
     {
-        int index = Random.Range(0, 17);
+        if (c == 8 && amountOfShops < 2)
+        {
+            Debug.Log(amountOfShops);
+            return nodeTypes[7];
+        }
 
+        int index = Random.Range(0, 17);
+        if ((c == 6 || c ==7) && numOfEvents < 4)
+        {
+            index = Random.Range(11, 16);
+        }
+        
         if (index < 10)
         {
             return nodeTypes[0];
         }
         else if (index == 10)
         {
+            numOfEvents++;
             return nodeTypes[1];
         }
         else if (index == 11)
         {
+            numOfEvents++;
             return nodeTypes[2];
         }
         else if (index == 12)
         {
+            numOfEvents++;
             return nodeTypes[3];
         }
         else if (index == 13)
         {
+            numOfEvents++;
             return nodeTypes[4];
         }
         else if (index == 14)
         {
+            numOfEvents++;
             return nodeTypes[5];
         }
         else
         {
-            return nodeTypes[7];
+            if (amountOfShops < 2)
+            {
+                amountOfShops++;
+                return nodeTypes[7];
+            }
+            return nodeTypes[1];
         }
+        
     }
 
     /*
@@ -332,7 +365,7 @@ public class Map : MonoBehaviour
      */
     public void setPossibleNodeCoords()
     { // +2
-        double baseX = transform.position.x + 1.65;
+        double baseX = transform.position.x + 1.6;
         double baseY = transform.position.y + 2;
         for (int c = 0; c < 10; c++)
         {
@@ -342,7 +375,7 @@ public class Map : MonoBehaviour
                 baseY = baseY - 2;
 
             }
-            baseX = baseX + 1.65;
+            baseX = baseX + 1.6;
             baseY = transform.position.y + 2;
         }
     }
@@ -384,7 +417,7 @@ public class Map : MonoBehaviour
             if (numNodeSelector == 0) //Instantiate 1 node
             {
                 int singleIndex = checkPossibleSingleNode(previousNodes);
-                spawnedEvent = Instantiate(selectNodeType(), eventSpots[singleIndex, c], Quaternion.identity);
+                spawnedEvent = Instantiate(selectNodeType(c), eventSpots[singleIndex, c], Quaternion.identity);
                 madeEventSpots[singleIndex, c] = spawnedEvent;
 
                 previousNodes = new bool[] { false, false, false };
@@ -396,9 +429,9 @@ public class Map : MonoBehaviour
             {
                 int[] ints = checkPossibleDoubleNode(previousNodes);
                 Debug.Log("Should be different: " + ints[0] + " and " + ints[1]);
-                spawnedEvent = Instantiate(selectNodeType(), eventSpots[ints[0], c], Quaternion.identity);
+                spawnedEvent = Instantiate(selectNodeType(c), eventSpots[ints[0], c], Quaternion.identity);
                 madeEventSpots[ints[0], c] = spawnedEvent;
-                spawnedEvent = Instantiate(selectNodeType(), eventSpots[ints[1], c], Quaternion.identity);
+                spawnedEvent = Instantiate(selectNodeType(c), eventSpots[ints[1], c], Quaternion.identity);
                 madeEventSpots[ints[1], c] = spawnedEvent;
 
                 previousNodes = new bool[] { false, false, false };
@@ -412,7 +445,7 @@ public class Map : MonoBehaviour
                 {
                     for (int i = 0; i < 3; i++)
                     {
-                        spawnedEvent = Instantiate(selectNodeType(), eventSpots[i, c], Quaternion.identity);
+                        spawnedEvent = Instantiate(selectNodeType(c), eventSpots[i, c], Quaternion.identity);
                         madeEventSpots[i, c] = spawnedEvent;
                     }
                     previousNodes = new bool[] { true, true, true }; //Not exactly what's happening but equivalent
@@ -421,9 +454,9 @@ public class Map : MonoBehaviour
                 {
                     int[] ints = checkPossibleDoubleNode(previousNodes);
                     Debug.Log("Should be different2: " +ints[0]+ " and " + ints[1]);
-                    spawnedEvent = Instantiate(selectNodeType(), eventSpots[ints[0], c], Quaternion.identity);
+                    spawnedEvent = Instantiate(selectNodeType(c), eventSpots[ints[0], c], Quaternion.identity);
                     madeEventSpots[ints[0], c] = spawnedEvent;
-                    spawnedEvent = Instantiate(selectNodeType(), eventSpots[ints[1], c], Quaternion.identity);
+                    spawnedEvent = Instantiate(selectNodeType(c), eventSpots[ints[1], c], Quaternion.identity);
                     madeEventSpots[ints[1], c] = spawnedEvent;
 
                     previousNodes = new bool[] { false, false, false };
@@ -445,7 +478,14 @@ public class Map : MonoBehaviour
         }
 
         //Creates the boss event node
-        spawnedEvent = Instantiate(nodeTypes[6], eventSpots[1, 9], Quaternion.identity);
+        if (mapNum == 1)
+        {
+            spawnedEvent = Instantiate(nodeTypes[6], eventSpots[1, 9], Quaternion.identity);
+        } else
+        {
+            spawnedEvent = Instantiate(nodeTypes[8], eventSpots[1, 9], Quaternion.identity);
+        }
+        
         madeEventSpots[1, 9] = spawnedEvent;
 
         
@@ -490,11 +530,6 @@ public class Map : MonoBehaviour
         {
             return true;
         }
-    }
-
-    public GameObject[,] getMadeEventSpots()
-    {
-        return madeEventSpots;
     }
 
     /*
@@ -563,6 +598,9 @@ public class Map : MonoBehaviour
                 madeEventSpots[p, col].GetComponent<BoxCollider2D>().enabled = false;
             }
         }
+
+        //madeEventSpots[row, col].GetComponent<SpriteRenderer>().sprite = playerSprite;
+    
 
         /*
         for (int c = 0; c < 9; c++)

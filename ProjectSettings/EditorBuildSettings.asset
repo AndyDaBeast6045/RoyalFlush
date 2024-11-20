@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EventsAndMap.unity
     guid: 0edf07208168747f2892455f9b4afea3
+  - enabled: 1
+    path: Assets/Shop/Shop.unity
+    guid: fa617a9883939184da0740025535b3a6
   m_configObjects: {}
