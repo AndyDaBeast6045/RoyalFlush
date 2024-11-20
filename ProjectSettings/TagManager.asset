@@ -9,6 +9,7 @@ TagManager:
   - CardReferences
   - CardController
   - CombatController
+  - SFXController
   layers:
   - Default
   - TransparentFX

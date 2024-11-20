@@ -15,5 +15,5 @@ MonoBehaviour:
   type: 1
   special: 0
   attackName: Clobber
-  value: 15
+  value: 10
   specialValue: 0

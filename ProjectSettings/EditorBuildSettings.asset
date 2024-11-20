@@ -9,15 +9,12 @@ EditorBuildSettings:
     path: Assets/Title Screen/TitleScreen.unity
     guid: 1e38bdca1178cf844a2f1dcad433b014
   - enabled: 1
-    path: Assets/Title Screen/Settings.unity
-    guid: 4854e8b2b6650114abcea1b9cbb34fda
-  - enabled: 1
-    path: Assets/Title Screen/Credits.unity
-    guid: 70e5e5e1b85557f439b44c4cb4b2a21d
+    path: Assets/Scenes/EventsAndMap.unity
+    guid: 0edf07208168747f2892455f9b4afea3
   - enabled: 1
     path: Assets/Combat/Combat.unity
     guid: 1fe938bba8f35304c97806fda33616c2
   - enabled: 1
-    path: Assets/Scenes/EventsAndMap.unity
-    guid: 0edf07208168747f2892455f9b4afea3
+    path: Assets/Shop/Shop.unity
+    guid: fa617a9883939184da0740025535b3a6
   m_configObjects: {}

@@ -11,46 +11,56 @@ public abstract class EnemyController : MonoBehaviour
     [SerializeField] private int enemyMaxHealth;
     [SerializeField] private int enemyCurrentHealth;
     [SerializeField] private int enemyShield;
-    [SerializeField] private GameObject telegraphObject;
+    [SerializeField] private int burnCount;
     [SerializeField] private int attackChoiceIndex;
     [SerializeField] private int isDead;
-    [SerializeField] private int burnCount;
+    [SerializeField] private int nextTurnTrigger;
+    [SerializeField] private bool sfxType;
 
     //Internal References
+    [SerializeField] private GameObject telegraphObject;
     [SerializeField] private Sprite[] telegraphTextures;
+    [SerializeField] private Attack[] attackPool;
+
     [SerializeField] private TMP_Text attackName;
     [SerializeField] private TMP_Text specialValue;
     [SerializeField] private TMP_Text attackValue;
+
     [SerializeField] private GameObject healthBar;
     [SerializeField] private TMP_Text healthBarValue;
+
     [SerializeField] private GameObject shieldBar;
     [SerializeField] private TMP_Text shieldBarValue;
+
     [SerializeField] private GameObject burnBar;
     [SerializeField] private TMP_Text burnBarValue;
-    [SerializeField] private Attack[] attackPool;
-    [SerializeField] private GameObject pointerObject;
 
-    //External Variables
-    [SerializeField] private PlayerController playerObject;
-    [SerializeField] private TurnController turnControllerObject;
-    [SerializeField] private CardController cardControllerObject;
-    [SerializeField] private CombatController combatControllerObject;
+    [SerializeField] private GameObject pointerObject;
     [SerializeField] private Animator objectAnimator;
 
-    //
-    // Start is called before the first frame update
+    //External Variables
+    private PlayerController playerObject;
+    private TurnController turnControllerObject;
+    private CardController cardControllerObject;
+    private CombatController combatControllerObject;
+    private CombatSFXController sfxController;
+
     void Start()
     {
         isDead = 0;
+        nextTurnTrigger = 0;
+        burnCount = 0;
+        enemyMaxHealth = (int)(enemyMaxHealth * Random.Range(0.8f, 1.2f));
+        enemyCurrentHealth = enemyMaxHealth;
+        enemyShield = 0;
+        attackChoiceIndex = 0;
+
         playerObject = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         turnControllerObject = GameObject.FindWithTag("TurnController").GetComponent<TurnController>();
         cardControllerObject = GameObject.FindWithTag("CardController").GetComponent<CardController>();
         combatControllerObject = GameObject.FindWithTag("CombatController").GetComponent<CombatController>();
-        burnCount = 0;
-        //telegraphObject.GetComponent<SpriteRenderer>().sprite = null;
-        enemyMaxHealth = (int)(enemyMaxHealth * Random.Range(0.8f, 1.2f));
-        enemyCurrentHealth = enemyMaxHealth;
-        enemyShield = 0;
+        sfxController = GameObject.FindWithTag("SFXController").GetComponent<CombatSFXController>();
+
         UpdateHealthBar();
     }
     void Update()
@@ -60,8 +70,12 @@ public abstract class EnemyController : MonoBehaviour
             Debug.Log(enemyName + " has died.");
             Destroy(gameObject);
         }
+        if (nextTurnTrigger == 1)
+        {
+            nextTurnTrigger = 0;
+            NextEnemyTurn();
+        }
     }
-
     void OnMouseEnter()
     {
         if (cardControllerObject.GetCurrentSet() != CardController.CardSet.Invalid)
@@ -69,20 +83,14 @@ public abstract class EnemyController : MonoBehaviour
             pointerObject.GetComponent<SpriteRenderer>().enabled = true;
         }
     }
-
     void OnMouseExit()
     {
         pointerObject.GetComponent<SpriteRenderer>().enabled = false;
     }
-
     void OnMouseDown()
     {
         if (cardControllerObject.GetCurrentSet() != CardController.CardSet.Invalid)
         {
-            if (cardControllerObject.GetClubValue() > 0)
-            {
-                combatControllerObject.AreaDamage(cardControllerObject.GetClubValue());
-            }
             if (cardControllerObject.GetHeartValue() > 0)
             {
                 burnCount += cardControllerObject.GetHeartValue();
@@ -97,7 +105,13 @@ public abstract class EnemyController : MonoBehaviour
                 playerObject.UpdateHealthBar();
             }
             Damage(cardControllerObject.GetHandValue());
+            if (cardControllerObject.GetClubValue() > 0)
+            {
+                combatControllerObject.AreaDamage(cardControllerObject.GetClubValue());
+            }
             cardControllerObject.ClearSelected();
+            pointerObject.GetComponent<SpriteRenderer>().enabled = false;
+            sfxController.PlaySlash();
         }
     }
 
@@ -105,110 +119,88 @@ public abstract class EnemyController : MonoBehaviour
     {
         return enemyCurrentHealth;
     }
-
-    public void Burn()
-    {
-        Damage(burnCount);
-        burnCount /= 2;
-        UpdateHealthBar();
-    }
-
-    //
     public int GetAttackIndex()
     {
         return attackChoiceIndex;
+    }
+    public Attack GetAttack(int attackPoolIndex)
+    {
+        return attackPool[attackPoolIndex];
+    }
+    public TurnController GetTurnController()
+    {
+        return turnControllerObject;
     }
 
     public void SetAttackIndex(int index)
     {
         attackChoiceIndex = index;
     }
-    //
 
-    public TurnController GetTurnController()
+    public void Burn()
     {
-        return turnControllerObject;
+        sfxController.PlayBurn();
+        Damage(burnCount);
+        burnCount /= 2;
+        UpdateHealthBar();
     }
-
-    //
-    public Attack GetAttack(int attackPoolIndex)
-    {
-        return attackPool[attackPoolIndex];
-    }
-
     public void UseAttack(Attack attack)
     {
         Attack.AttackType type = attack.GetAttackType();
         switch (type)
         {
             case Attack.AttackType.Light:
-                DamagePlayer(attack.GetValue(), attack.GetSpecial(), attack.GetSpecialValue());
+                DamagePlayer(attack.GetValue());
                 break;
             case Attack.AttackType.Medium:
-                DamagePlayer(attack.GetValue(), attack.GetSpecial(), attack.GetSpecialValue());
+                DamagePlayer(attack.GetValue());
                 break;
             case Attack.AttackType.Heavy:
-                DamagePlayer(attack.GetValue(), attack.GetSpecial(), attack.GetSpecialValue());
+                DamagePlayer(attack.GetValue());
                 break;
             case Attack.AttackType.Shield:
                 Shield(attack.GetValue());
-                if (attack.GetSpecial() != Attack.AttackSpecial.Normal)
-                {
-                    BuffSelf(attack.GetSpecial(), attack.GetSpecialValue());
-                }
                 break;
             case Attack.AttackType.Heal:
                 Heal(attack.GetValue());
-                if (attack.GetSpecial() != Attack.AttackSpecial.Normal)
-                {
-                    BuffSelf(attack.GetSpecial(), attack.GetSpecialValue());
-                }
                 break;
             case Attack.AttackType.SpecialOffense:
-                DamagePlayer(0, attack.GetSpecial(), attack.GetSpecialValue());
+                DamagePlayer(attack.GetValue(), attack.GetSpecialValue());
                 break;
             case Attack.AttackType.SpecialDefense:
-                DamagePlayer(attack.GetValue(), attack.GetSpecial(), attack.GetSpecialValue());
+                DamagePlayer(attack.GetValue());
+                Shield(attack.GetSpecialValue());
                 break;
-            case Attack.AttackType.Special:
-                DamagePlayer(attack.GetValue(), attack.GetSpecial(), attack.GetSpecialValue());
+            case Attack.AttackType.SpecialHeal:
+                DamagePlayer(attack.GetValue());
+                Heal(attack.GetSpecialValue());
                 break;
             default:
                 break;
         }
     }
 
-    public void DamagePlayer(int damage, Attack.AttackSpecial specialType, int specialValue)
+    public void DamagePlayer(int damage)
     {
-        switch (specialType)
+        if (damage > 0)
         {
-            case Attack.AttackSpecial.Burn:
-                break;
-            case Attack.AttackSpecial.Vulnerable:
-                break;
-            case Attack.AttackSpecial.Weak:
-                break;
-            default:
-                break;
+            playerObject.Damage(damage);
         }
-        playerObject.Damage(damage);
     }
-
-    public void BuffSelf(Attack.AttackSpecial specialType, int specialValue)
+    public void DamagePlayer(int damage, int specialValue)
     {
-        Debug.Log("Buff");
+        if (damage > 0)
+        {
+            playerObject.Damage(damage);
+        }
     }
-    //
 
     public PlayerController GetPlayer()
     {
         return playerObject;
     }
-
-    //
     public void Damage(int damage)
     {
-        objectAnimator.SetTrigger("Damaged");
         if (enemyShield > 0)
         {
             int damageReduced = enemyShield;
@@ -226,9 +218,13 @@ public abstract class EnemyController : MonoBehaviour
         enemyCurrentHealth -= damage;
         if (enemyCurrentHealth <= 0)
         {
-            Death();
+            objectAnimator.SetTrigger("DeathTrigger");
         }
-        UpdateHealthBar();
+        else
+        {
+            objectAnimator.SetTrigger("Damaged");
+            UpdateHealthBar();
+        }
     }
 
     public void Heal(int healing)
@@ -244,14 +240,16 @@ public abstract class EnemyController : MonoBehaviour
     public void Shield(int shield)
     {
         enemyShield += shield;
+        UpdateHealthBar();
     }
-    //
 
     public void TelegraphAttack(Attack attack)
     {
         attackName.text = attack.GetName();
-        specialValue.text = null;
         objectAnimator.SetTrigger("TeleSwitch");
+        attackValue.text = null;
+        specialValue.text = null;
+        telegraphObject.GetComponent<SpriteRenderer>().sprite = null;
         switch (attack.GetAttackType())
         {
             case Attack.AttackType.Light:
@@ -275,26 +273,32 @@ public abstract class EnemyController : MonoBehaviour
                 telegraphObject.GetComponent<SpriteRenderer>().sprite = telegraphTextures[4];
                 break;
             case Attack.AttackType.SpecialOffense:
-                specialValue.text = attack.GetSpecialValue() + " " + attack.GetSpecial().ToString();
                 attackValue.text = attack.GetValue() + " damage";
+                specialValue.text = attack.GetSpecialValue() + " burn";
                 telegraphObject.GetComponent<SpriteRenderer>().sprite = telegraphTextures[5];
                 break;
             case Attack.AttackType.SpecialDefense:
-                specialValue.text = attack.GetSpecialValue() + " " + attack.GetSpecial().ToString();
-                attackValue.text = attack.GetValue() + " shield";
+                attackValue.text = attack.GetValue() + " damage";
+                specialValue.text = attack.GetSpecialValue() + " shield";
                 telegraphObject.GetComponent<SpriteRenderer>().sprite = telegraphTextures[6];
                 break;
-            case Attack.AttackType.Special:
-                attackValue.text = null;
+            case Attack.AttackType.SpecialHeal:
+                if (attack.GetValue() > 0)
+                {
+                    attackValue.text = attack.GetValue() + " damage";
+                    specialValue.text = attack.GetSpecialValue() + " heal";
+                }
+                else
+                {
+                    attackValue.text = null;
+                    specialValue.text = null;
+                }
                 telegraphObject.GetComponent<SpriteRenderer>().sprite = telegraphTextures[7];
                 break;
             default:
-                telegraphObject.GetComponent<SpriteRenderer>().sprite = null;
                 break;
         }
     }
-
-    //
     public abstract void PlayerTurnStart();
 
     public void EnemyTurnStart()
@@ -304,9 +308,30 @@ public abstract class EnemyController : MonoBehaviour
             Burn();
         }
         enemyShield = 0;
-        UseAttack(attackPool[attackChoiceIndex]);
+        if (enemyCurrentHealth <= 0)
+        {
+            NextEnemyTurn();
+            objectAnimator.SetTrigger("DeathTrigger");
+        }
+        else
+        {
+            UseAttack(attackPool[attackChoiceIndex]);
+            objectAnimator.SetTrigger("AttackTrigger");
+            if (sfxType)
+            {
+                sfxController.PlaySlash();
+            }
+            else
+            {
+                sfxController.PlayBlunt();
+            }
+        }
     }
-    //
+
+    public void NextEnemyTurn()
+    {
+        combatControllerObject.NextEnemyTurn(gameObject);
+    }
 
     public void UpdateHealthBar()
     {
@@ -316,7 +341,7 @@ public abstract class EnemyController : MonoBehaviour
         if (enemyShield > 0)
         {
             shieldBar.SetActive(true);
-            shieldBar.GetComponent<Slider>().value = ((float)enemyShield / (float)enemyMaxHealth);
+            shieldBar.GetComponent<Slider>().value = ((float)enemyShield / (float)enemyMaxHealth/2);
             shieldBarValue.text = enemyShield.ToString();
         }
         else
@@ -332,10 +357,5 @@ public abstract class EnemyController : MonoBehaviour
         {
             burnBar.SetActive(false);
         }
-    }
-
-    public void Death()
-    {
-        objectAnimator.SetTrigger("DeathTrigger");
     }
 }

@@ -7,11 +7,11 @@ public class ChipSlime : EnemyController
     override public void PlayerTurnStart()
     {
         float randomValue = Random.Range(0f, 1f);
-        if (randomValue > 0.7)
+        if (randomValue > 0.8)
         {
             SetAttackIndex(1);
         }
-        else if (randomValue > 0.5)
+        else if (randomValue > 0.7)
         {
             SetAttackIndex(2);
         }

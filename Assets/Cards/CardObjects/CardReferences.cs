@@ -14,6 +14,64 @@ public class CardReferences : MonoBehaviour
         return GetRank(cardRank, GetSuit(cardSuit));
     }
 
+    public CardObject GetRandomCard()
+    {
+        return GetRank(GetRandomRank(), GetRandomSuit());
+    }
+
+    public CardObject[] GetRandomSuit()
+    {
+        int suit = Random.Range(0, 4);
+        switch (suit)
+        {
+            case 0:
+                return spades;
+            case 1:
+                return clubs;
+            case 2:
+                return hearts;
+            case 3:
+                return diamonds;
+            default:
+                return null;
+        }
+    }
+    public CardObject.CardRank GetRandomRank()
+    {
+        int rank = Random.Range(0, 13);
+        switch (rank)
+        {
+            case 0:
+                return CardObject.CardRank.Ace;
+            case 1:
+                return CardObject.CardRank.Two;
+            case 2:
+                return CardObject.CardRank.Three;
+            case 3:
+                return CardObject.CardRank.Four;
+            case 4:
+                return CardObject.CardRank.Five;
+            case 5:
+                return CardObject.CardRank.Six;
+            case 6:
+                return CardObject.CardRank.Seven;
+            case 7:
+                return CardObject.CardRank.Eight;
+            case 8:
+                return CardObject.CardRank.Nine;
+            case 9:
+                return CardObject.CardRank.Ten;
+            case 10:
+                return CardObject.CardRank.Jack;
+            case 11:
+                return CardObject.CardRank.Queen;
+            case 12:
+                return CardObject.CardRank.King;
+            default:
+                return CardObject.CardRank.Ace;
+        }
+    }
+
     public CardObject[] GetSuit(CardObject.CardSuit cardSuit)
     {
         switch (cardSuit)
@@ -26,7 +84,8 @@ public class CardReferences : MonoBehaviour
                 return clubs;
             case CardObject.CardSuit.Diamond:
                 return diamonds;
-            default: return null;
+            default: 
+                return null;
         }
     }
 

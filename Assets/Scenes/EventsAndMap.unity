@@ -1514,7 +1514,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1510060133}
           m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
-          m_MethodName: battleClick
+          m_MethodName: shopClick
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

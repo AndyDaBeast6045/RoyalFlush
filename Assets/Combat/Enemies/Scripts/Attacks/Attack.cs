@@ -6,12 +6,10 @@ using UnityEngine;
 public class Attack : ScriptableObject
 {
     //Enums
-    public enum AttackType { Light, Medium, Heavy, Shield, Heal, SpecialOffense, SpecialDefense, Special };
-    public enum AttackSpecial { Normal, Burn, Regen, Vulnerable, Sturdy, Weak, Heal, Shield };
+    public enum AttackType { Light, Medium, Heavy, Shield, Heal, SpecialOffense, SpecialDefense, SpecialHeal };
 
     //Variables
     [SerializeField] private AttackType type;
-    [SerializeField] private AttackSpecial special;
     [SerializeField] private string attackName;
     [SerializeField] private int value;
     [SerializeField] private int specialValue;
@@ -20,28 +18,16 @@ public class Attack : ScriptableObject
     {
         return attackName;
     }
-
-    //
     public AttackType GetAttackType()
     {
         return type;
     }
-
     public int GetValue()
     {
         return value;
     }
-    //
-
-    //
-    public AttackSpecial GetSpecial()
-    {
-        return special;
-    }
-
     public int GetSpecialValue() 
     {
         return specialValue;
     }
-    //
 }
