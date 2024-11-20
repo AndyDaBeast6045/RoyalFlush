@@ -7,6 +7,7 @@ public class CombatMusicController : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip startClip;
     [SerializeField] private AudioClip loopClip;
+    [SerializeField] private AudioClip victoryClip;
 
     // Start is called before the first frame update
     void Start()
@@ -23,5 +24,17 @@ public class CombatMusicController : MonoBehaviour
         audioSource.clip = loopClip;
         audioSource.loop = true;
         audioSource.Play();
+    }
+
+    public void Victory()
+    {
+        audioSource.clip = victoryClip;
+        audioSource.loop = true;
+        audioSource.Play();
+    }
+
+    public void Defeat()
+    {
+        Destroy(gameObject);
     }
 }

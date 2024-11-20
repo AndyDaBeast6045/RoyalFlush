@@ -27,6 +27,7 @@ public class CombatController : MonoBehaviour
     [SerializeField] private TMP_Text currentChips;
     [SerializeField] private TMP_Text currentTurn;
     [SerializeField] private GameObject endTurnButton;
+    [SerializeField] private CombatMusicController combatMusicController;
 
 
     // Start is called before the first frame update
@@ -115,6 +116,7 @@ public class CombatController : MonoBehaviour
 
     public void Victory()
     {
+        combatMusicController.Victory();
         victoryCanvas.SetActive(true);
         int chipsGained = (int)((Random.Range(200f, 400f)) * MainManager.Instance.chipsMultiplier);
         MainManager.Instance.chips += chipsGained;
@@ -132,6 +134,7 @@ public class CombatController : MonoBehaviour
 
     public void Defeat()
     {
+        combatMusicController.Defeat();
         defeatCanvas.SetActive(true);
     }
 }

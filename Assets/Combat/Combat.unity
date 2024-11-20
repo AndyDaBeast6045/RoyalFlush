@@ -2216,6 +2216,7 @@ MonoBehaviour:
   currentChips: {fileID: 262047424}
   currentTurn: {fileID: 1398561890}
   endTurnButton: {fileID: 2096476648}
+  combatMusicController: {fileID: 1345218188}
 --- !u!4 &452417767
 Transform:
   m_ObjectHideFlags: 0
@@ -5057,6 +5058,7 @@ MonoBehaviour:
   audioSource: {fileID: 1345218189}
   startClip: {fileID: 8300000, guid: 3935b1faac7dcdf4cb94184f3e3e0062, type: 3}
   loopClip: {fileID: 8300000, guid: dab05e10a7bb9944db83882341371aeb, type: 3}
+  victoryClip: {fileID: 8300000, guid: 822fdf91a399b74488a260f516b3e2a3, type: 3}
 --- !u!82 &1345218189
 AudioSource:
   m_ObjectHideFlags: 0
