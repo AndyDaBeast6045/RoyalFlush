@@ -250,8 +250,12 @@ public class Map : MonoBehaviour
             Debug.Log(amountOfShops);
             return nodeTypes[7];
         }
-
+        
         int index = Random.Range(0, 17);
+        if (c == 1 || c== 2)
+        {
+            index = Random.Range(0, 14);
+        }
         if ((c == 6 || c ==7) && numOfEvents < 4)
         {
             index = Random.Range(11, 16);
