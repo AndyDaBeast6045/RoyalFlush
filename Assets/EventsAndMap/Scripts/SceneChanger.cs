@@ -41,6 +41,12 @@ public class SceneChanger : MonoBehaviour
         Camera.main.transform.position = new Vector3(8.25f, 0f, -10f);
     }
 
+    public void shopClick()
+    {
+        eventHead.GetComponent<Map>().manageNodes(transform.position.x, transform.position.y);
+        SceneManager.LoadScene("Shop", LoadSceneMode.Additive);
+    }
+
     public void battleClick()
     {
         //cam.transform.position = new Vector3(27f, 0f, -10f);

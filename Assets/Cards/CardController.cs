@@ -26,10 +26,14 @@ public class CardController : MonoBehaviour
     [SerializeField] private TMP_Text setValueObject;
     [SerializeField] private Transform handObject;
     [SerializeField] private GameObject blankCard;
+    [SerializeField] private CombatSFXController sfxController;
+    [SerializeField] private TMP_Text deckDisplay;
+    [SerializeField] private TMP_Text discardDisplay;
 
     // Start is called before the first frame update
     void Start()
     {
+        sfxController = GameObject.FindWithTag("SFXController").GetComponent<CombatSFXController>();
         deck = new List<CardObject>();
         discard = new List<CardObject>();
         hand = new List<GameObject>();
@@ -46,7 +50,14 @@ public class CardController : MonoBehaviour
         }
         Shuffle();
         UpdateDisplay();
+        UpdateCardDisplay();
         DrawHand();
+    }
+
+    public void UpdateCardDisplay()
+    {
+        deckDisplay.text = deck.Count.ToString();
+        discardDisplay.text = discard.Count.ToString();
     }
 
     public void DrawHand()
@@ -150,6 +161,7 @@ public class CardController : MonoBehaviour
         {
             Recycle();
         }
+        UpdateCardDisplay();
     }
 
     public void DrawAmount(int cardsDrawn)
@@ -171,6 +183,7 @@ public class CardController : MonoBehaviour
         }
         EvaluateSetValue();
         UpdateDisplay();
+        UpdateCardDisplay();
     }
 
     public void ClearSelected()
@@ -185,6 +198,7 @@ public class CardController : MonoBehaviour
         selectedCards.Clear();
         EvaluateSetValue();
         UpdateDisplay();
+        UpdateCardDisplay();
     }
 
     public void Recycle()
@@ -195,6 +209,7 @@ public class CardController : MonoBehaviour
             discard.RemoveAt(i);
         }
         Shuffle();
+        UpdateCardDisplay();
     }
 
     public void SelectCard(GameObject selectedCard)
@@ -211,6 +226,7 @@ public class CardController : MonoBehaviour
         }
         CheckSet();
         UpdateDisplay();
+        UpdateCardDisplay();
     }
 
     public CardSet GetCurrentSet()
@@ -262,13 +278,13 @@ public class CardController : MonoBehaviour
                         handValue += 10;
                         break;
                     case CardObject.CardRank.Jack:
-                        handValue += 10;
+                        handValue += 11;
                         break;
                     case CardObject.CardRank.Queen:
-                        handValue += 10;
+                        handValue += 12;
                         break;
                     case CardObject.CardRank.King:
-                        handValue += 10;
+                        handValue += 13;
                         break;
                     default:
                         break;
@@ -326,8 +342,8 @@ public class CardController : MonoBehaviour
                 default:
                     break;
             }
-            heartValue = (int)(heartValue * handValue * 0.25);
-            clubValue = (int)(clubValue * handValue * 0.20);
+            heartValue = (int)(heartValue * handValue * 0.20);
+            clubValue = (int)(clubValue * handValue * 0.15);
             diamondValue = (int)(diamondValue * handValue * 0.30);
         }
     }

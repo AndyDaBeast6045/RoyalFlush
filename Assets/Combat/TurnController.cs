@@ -14,7 +14,7 @@ public class TurnController : MonoBehaviour
     public void Reset()
     {
         CurrentTurn = Turn.TurnStart;
-        TurnCount = 0;
+        TurnCount = 1;
     }
 
     public Turn GetTurn()

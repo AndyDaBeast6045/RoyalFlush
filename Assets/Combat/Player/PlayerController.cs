@@ -9,15 +9,31 @@ public class PlayerController : MonoBehaviour
     //Internal Variables
     [SerializeField] private int playerMaxHealth;
     [SerializeField] private int playerCurrentHealth;
+    [SerializeField] private int playerShield;
+    [SerializeField] private int burnCount;
+    [SerializeField] private int isDead;
+
+    //Internal References
     [SerializeField] private GameObject healthBar;
     [SerializeField] private TMP_Text healthBarValue;
-    [SerializeField] private int playerShield;
+
     [SerializeField] private GameObject shieldBar;
     [SerializeField] private TMP_Text shieldBarValue;
+
+    [SerializeField] private GameObject burnBar;
+    [SerializeField] private TMP_Text burnBarValue;
+
+    [SerializeField] private Animator objectAnimator;
+
+    //External References
+    private CombatController combatControllerObject;
 
     // Start is called before the first frame update
     void Start()
     {
+        isDead = 0;
+        combatControllerObject = GameObject.FindWithTag("CombatController").GetComponent<CombatController>();
+        
         if (MainManager.Instance != null)
         {
             playerMaxHealth = MainManager.Instance.playerMaxHealth;
@@ -25,7 +41,15 @@ public class PlayerController : MonoBehaviour
         }
         UpdateHealthBar();
     }
-
+    void Update()
+    {
+        if (isDead == 1)
+        {
+            Debug.Log("Player has died.");
+            combatControllerObject.Defeat();
+            Destroy(gameObject);
+        }
+    }
     //
     public int GetHealth()
     {
@@ -42,31 +66,43 @@ public class PlayerController : MonoBehaviour
     {
         return playerMaxHealth;
     }
-    //
-    
-    //
+
+    public void Burn()
+    {
+        Damage(burnCount);
+        burnCount /= 2;
+        UpdateHealthBar();
+    }
+
     public void Damage(int damage)
     {
-        if (playerShield > 0)
+        if (damage > 0)
         {
-            int damageReduced = playerShield;
-            playerShield -= damage;
-            damage -= damageReduced;
-            if (damage < 0)
+            if (playerShield > 0)
             {
-                damage = 0;
+                int damageReduced = playerShield;
+                playerShield -= damage;
+                damage -= damageReduced;
+                if (damage < 0)
+                {
+                    damage = 0;
+                }
+                if (playerShield < 0)
+                {
+                    playerShield = 0;
+                }
             }
-            if (playerShield < 0)
+            playerCurrentHealth -= damage;
+            if (playerCurrentHealth <= 0)
             {
-                playerShield = 0;
+                objectAnimator.SetTrigger("DeathTrigger");
+            }
+            else
+            {
+                objectAnimator.SetTrigger("Damaged");
+                UpdateHealthBar();
             }
         }
-        playerCurrentHealth -= damage;
-        if (playerCurrentHealth <= 0)
-        {
-            Death();
-        }
-        UpdateHealthBar();
     }
 
     public void Heal(int heal)
@@ -93,17 +129,21 @@ public class PlayerController : MonoBehaviour
         if (playerShield > 0)
         {
             shieldBar.SetActive(true);
-            shieldBar.GetComponent<Slider>().value = ((float)playerShield / (float)playerMaxHealth);
+            shieldBar.GetComponent<Slider>().value = ((float)playerShield / (float)playerMaxHealth/2);
             shieldBarValue.text = playerShield.ToString();
         }
         else
         {
             shieldBar.SetActive(false);
         }
-    }
-
-    public void Death()
-    {
-        Debug.Log("YOU DIED");
+        if (burnCount > 0)
+        {
+            burnBar.SetActive(true);
+            burnBarValue.text = burnCount.ToString();
+        }
+        else
+        {
+            burnBar.SetActive(false);
+        }
     }
 }

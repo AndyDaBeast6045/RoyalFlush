@@ -8,6 +8,7 @@ public class MainManager : MonoBehaviour
     public static MainManager Instance;
 
     public int chips;
+    public double chipsMultiplier;
     public int playerCurrentHealth;
     public int playerMaxHealth;
     public int playerHandSize;

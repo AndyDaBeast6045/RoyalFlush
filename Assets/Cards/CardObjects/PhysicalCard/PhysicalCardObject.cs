@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class PhysicalCardObject : MonoBehaviour
 {
-    [SerializeField] private bool isSelected;
-    [SerializeField] private CardObject assignedCard;
+    private bool isSelected;
+    private CardObject assignedCard;
     [SerializeField] private Image selectedObject;
 
     void Start()
