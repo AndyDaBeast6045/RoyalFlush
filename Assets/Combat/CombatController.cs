@@ -106,14 +106,23 @@ public class CombatController : MonoBehaviour
 
     public void NextEnemyTurn(GameObject currentEnemy)
     {
-        if ((ArrayUtility.IndexOf(enemyList, currentEnemy) + 1) >= enemyList.Length)
+        if ((GetIndexOfGameObject(enemyList, currentEnemy) + 1) >= enemyList.Length)
         {
             Next();
         }
         else
         {
-            enemyList[ArrayUtility.IndexOf(enemyList, currentEnemy) + 1].GetComponent<EnemyController>().EnemyTurnStart();
+            enemyList[GetIndexOfGameObject(enemyList, currentEnemy) + 1].GetComponent<EnemyController>().EnemyTurnStart();
         }
+    }
+
+    public int GetIndexOfGameObject(GameObject[] objs, GameObject target)
+    {
+        for (int i = 0; i < objs.Length; i++)
+        {
+            if (objs[i] == target) return i;
+        }
+        return -1;
     }
 
     public void Next()
