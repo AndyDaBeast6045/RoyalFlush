@@ -88,7 +88,7 @@ public class SceneChanger : MonoBehaviour
         expoText.GetComponent<TMPro.TextMeshProUGUI>().text = "The door slams behind you as you enter a room empty save for a lonely roulette table. \nIt seems there's no escape until you place a bet!";
         drop.SetActive(true);
         GameObject.Find("Canvas/RouletteBut1/Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = "Bet on Red";
-        GameObject.Find("Canvas/RouletteBut2/Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = "BetOnBlack";
+        GameObject.Find("Canvas/RouletteBut2/Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = "Bet On Black";
         image.GetComponent<Image>().sprite = toilet;
         but1.GetComponentInChildren<Button>().onClick.RemoveAllListeners();
         but1.GetComponentInChildren<Button>().onClick.AddListener(delegate { but1.GetComponent<ButtonContr>().bet(); });
