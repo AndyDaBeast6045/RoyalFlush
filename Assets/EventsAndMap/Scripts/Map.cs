@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 using Vector2 = UnityEngine.Vector2;
 using Random = UnityEngine.Random;
 using Quaternion = UnityEngine.Quaternion;
@@ -19,18 +19,30 @@ public class Map : MonoBehaviour
     public GameObject[] nodeTypes = new GameObject[9];
     private bool[,] madeNodes = new bool[3, 10];
 
+    public GameObject fadeIn;
+    public GameObject fadeObject;
+
     public static int amountOfShops;
     public static int numOfEvents;
     public static int mapNum;
     
     void Start()
     {
-        mapNum = 1;
-        createMap();
+        Debug.Log(MainManager.Instance.map2);
+        //MainManager.Instance.map2 = true;
+        if (MainManager.Instance.map2) {
+            SceneManager.UnloadSceneAsync("Combat");
+            fadeIn.SetActive(true);
+            createMap(nodeTypes[8]);
+            fadeObject.GetComponent<FadeScript>().fadeInB = true;
+        } else {
+            createMap(nodeTypes[6]);
+        }
+        MainManager.Instance.map2 = true;
     }
 
     // Start is called before the first frame update
-    public void createMap()
+    public void createMap(GameObject currentMapBoss)
     {
         amountOfShops = 0;
         numOfEvents = 0;
@@ -38,7 +50,7 @@ public class Map : MonoBehaviour
         setPossibleNodeCoords();
 
         //Chooses which spaces and events are used/created
-        instantiateEvents();
+        instantiateEvents(currentMapBoss);
 
 
         //Creates path prefabs between nodes
@@ -324,7 +336,7 @@ public class Map : MonoBehaviour
      * Iterates through a 2d array of coordinates and instantiates events by first selecting a random number of events to create on a
      * column and then choosing a corresponding row based on the position of the previous column of events.
      */
-    public void instantiateEvents()
+    public void instantiateEvents(GameObject currentMapBoss)
     {
         //Represents the presence of nodes in the previous column
         bool[] previousNodes = new bool[] { false, true, false };
@@ -401,13 +413,8 @@ public class Map : MonoBehaviour
         }
 
         //Creates the boss event node
-        if (mapNum == 1)
-        {
-            spawnedEvent = Instantiate(nodeTypes[6], eventSpots[1, 9], Quaternion.identity);
-        } else
-        {
-            spawnedEvent = Instantiate(nodeTypes[8], eventSpots[1, 9], Quaternion.identity);
-        }
+        
+        spawnedEvent = Instantiate(currentMapBoss, eventSpots[1, 9], Quaternion.identity);    
         
         madeEventSpots[1, 9] = spawnedEvent;
 

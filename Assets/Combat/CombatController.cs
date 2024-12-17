@@ -157,6 +157,9 @@ public class CombatController : MonoBehaviour
 
     public void FinalVictory()
     {
-        trueVictoryCanvas.SetActive(true);
+        //trueVictoryCanvas.SetActive(true);
+        SceneManager.UnloadSceneAsync("EventsAndMap");
+        SceneManager.LoadScene("EventsAndMap", LoadSceneMode.Additive);
+        //SceneManager.UnloadSceneAsync("Combat");
     }
 }

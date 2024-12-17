@@ -15,9 +15,11 @@ public class MainManager : MonoBehaviour
     public int nextEncounter;
     public List<CardObject> deck;
     public bool finalBattle;
+    public bool map2;
 
     private void Awake()
     {
+        map2 = false;
         if (Instance != null)
         {
             Destroy(gameObject);
