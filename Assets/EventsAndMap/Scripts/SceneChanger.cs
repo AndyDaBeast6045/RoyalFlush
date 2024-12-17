@@ -36,34 +36,16 @@ public class SceneChanger : MonoBehaviour
     
     public void mapClick()
     {
-        //cam.transform.position = new Vector3(0f, 0f, -10f);'
         Camera.main.transform.position = new Vector3(8.25f, 0f, -10f);
     }
 
     public void battleClick()
     {
-        //cam.transform.position = new Vector3(27f, 0f, -10f);
-        //Camera.main.transform.position = new Vector3(29f, 0f, -10f);
-        
+        StartCoroutine(changeToClikedSpriteAfterTime(1));
         //Debug.Log("Battle Node was pressed.");
-        //Camera.main.transform.position = new Vector3(47f, 0f, -10f);
     
         eventHead.GetComponent<Map>().manageNodes(transform.position.x, transform.position.y);
         SceneManager.LoadScene("Combat", LoadSceneMode.Additive);
-
-        //asyncLoad = SceneManager.LoadSceneAsync("Combat");
-        //asyncLoad.allowSceneActivation = true;
-
-        /*
-        while (!asyncLoad.isDone)
-        {
-            yield return null;
-        }
-        */
-
-
-
-        //enemySpawner.GetComponent<EnemySpawner>().spawnEnemies(enemySpawner.GetComponent<EnemySpawner>().difficultyLevel);
     }
 
     public void enableUI()
@@ -78,12 +60,14 @@ public class SceneChanger : MonoBehaviour
 
     public void shopClick()
     {
+        StartCoroutine(changeToClikedSpriteAfterTime(1));
         eventHead.GetComponent<Map>().manageNodes(transform.position.x, transform.position.y);
         SceneManager.LoadScene("Shop", LoadSceneMode.Additive);
     }
 
     public void rouletteClick()
     {
+        StartCoroutine(changeToClikedSpriteAfterTime(1));
         enableUI();
         expoText.GetComponent<TMPro.TextMeshProUGUI>().text = "The door slams behind you as you enter a room empty save for a lonely roulette table. \nIt seems there's no escape until you place a bet!";
         drop.SetActive(true);
@@ -101,6 +85,7 @@ public class SceneChanger : MonoBehaviour
 
     public void manInSuitClick()
     {
+        StartCoroutine(changeToClikedSpriteAfterTime(1));
         enableUI();
         expoText.GetComponent<TMPro.TextMeshProUGUI>().text = "As you walk past a dark hallway, a mysterious voice calls out to you: \n\"Psst! Knight! I've heard about your journey and I', just DYING to lend you a helping hand. Follow me and I might just CUT you a deal...\"";
         GameObject.Find("Canvas/RouletteBut1/Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = "Follow";
@@ -117,6 +102,7 @@ public class SceneChanger : MonoBehaviour
 
     public void manInSuit2()
     {
+        StartCoroutine(changeToClikedSpriteAfterTime(1));
         expoText.GetComponent<TMPro.TextMeshProUGUI>().text = "\"Give up 200 health and I'll reward you with 1000 chips. \nNot too shabby an offer, huh!\"";
         GameObject.Find("Canvas/RouletteBut1/Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = "Accept";
         GameObject.Find("Canvas/RouletteBut2/Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = "Ignore";
@@ -133,6 +119,7 @@ public class SceneChanger : MonoBehaviour
 
     public void snackBarClick()
     {
+        StartCoroutine(changeToClikedSpriteAfterTime(1));
         enableUI();
         expoText.GetComponent<TMPro.TextMeshProUGUI>().text = "At your wits ends, you see the familiar neon glow of the casino's snack bars. \nTake a seat, or spend your hard-earned earnings for a medium heal and a random card.";
         GameObject.Find("Canvas/RouletteBut1/Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = "Rest (Heal 50)";
@@ -153,6 +140,7 @@ public class SceneChanger : MonoBehaviour
 
     public void bathroomClick()
     {
+        StartCoroutine(changeToClikedSpriteAfterTime(1));
         enableUI();
         expoText.GetComponent<TMPro.TextMeshProUGUI>().text = "Turning the corner, the welcome sight of a porcelain throne greets your eyes. You may rest here, or relieve yourself of a great burden.";
         //GameObject but1Text = GameObject.Find("Canvas/RouletteBut1/Text (TMP)");
@@ -170,6 +158,7 @@ public class SceneChanger : MonoBehaviour
 
     public void bouncerClick()
     {
+        StartCoroutine(changeToClikedSpriteAfterTime(1));
         enableUI();
         expoText.GetComponent<TMPro.TextMeshProUGUI>().text = "As you venture on, a large man you recognize you recognize as a bouncer blocks your path. In a dark, burly voice he bellows:\n\"Pay the fee or pay the price!\"";
         GameObject.Find("Canvas/RouletteBut1/Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = "Pay 250 Chips";
@@ -187,6 +176,7 @@ public class SceneChanger : MonoBehaviour
 
     public void miniBossClick()
     {
+        StartCoroutine(changeToClikedSpriteAfterTime(1));
         //Replace '5' with hypothetical miniboss encounter
         MainManager.Instance.finalBattle = true;
         MainManager.Instance.nextEncounter = 4;
@@ -202,5 +192,10 @@ public class SceneChanger : MonoBehaviour
     public void changeToOGSprite()
     {
         GetComponent<SpriteRenderer>().color = ogColor;
+    }
+
+    IEnumerator changeToClikedSpriteAfterTime(float seconds) {
+        yield return new WaitForSeconds(seconds);
+        GetComponent<SpriteRenderer>().color = Color.black;
     }
 }
