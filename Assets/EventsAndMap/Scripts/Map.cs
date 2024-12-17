@@ -34,7 +34,7 @@ public class Map : MonoBehaviour
     {
         amountOfShops = 0;
         numOfEvents = 0;
-        //Creates a 3x9 grid of x and y coordinates to potentially spawn nodes on.
+        //Creates a 3x9 grid of x and y coordinates to potentially spawn nodes on. 
         setPossibleNodeCoords();
 
         //Chooses which spaces and events are used/created
