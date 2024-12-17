@@ -51,8 +51,8 @@ public abstract class EnemyController : MonoBehaviour
         nextTurnTrigger = 0;
         burnCount = 0;
         enemyMaxHealth = (int)(enemyMaxHealth * Random.Range(0.8f, 1.2f));
-        //enemyCurrentHealth = enemyMaxHealth;
-        enemyCurrentHealth = 1;
+        enemyCurrentHealth = enemyMaxHealth;
+        //enemyCurrentHealth = 1;
         enemyShield = 0;
         attackChoiceIndex = 0;
 

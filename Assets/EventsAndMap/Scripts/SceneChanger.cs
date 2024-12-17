@@ -183,6 +183,11 @@ public class SceneChanger : MonoBehaviour
         SceneManager.LoadScene("Combat", LoadSceneMode.Additive);
     }
 
+    public void finalBossClick()
+    {
+        Debug.Log("I don't think we have one of these yet...");
+    }
+
     //Aesthetic map methods
     public void changeToHoverSprite()
     {
@@ -196,6 +201,6 @@ public class SceneChanger : MonoBehaviour
 
     IEnumerator changeToClikedSpriteAfterTime(float seconds) {
         yield return new WaitForSeconds(seconds);
-        GetComponent<SpriteRenderer>().color = Color.black;
+        GetComponent<SpriteRenderer>().color = Color.grey;
     }
 }
