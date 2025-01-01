@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   attackName: Slam
-  value: 60
+  value: 100
   specialValue: 0

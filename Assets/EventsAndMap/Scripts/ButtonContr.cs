@@ -112,7 +112,7 @@ public class ButtonContr : MonoBehaviour
 
     public void fightBouncer()
     {
-        MainManager.Instance.nextEncounter = 3;
+        MainManager.Instance.nextEncounter = 1;
         SceneManager.LoadScene("Combat", LoadSceneMode.Additive);
         closeUI();
     }

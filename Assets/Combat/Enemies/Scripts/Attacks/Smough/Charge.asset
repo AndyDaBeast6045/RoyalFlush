@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 6
   attackName: Charge
-  value: 20
-  specialValue: 10
+  value: 25
+  specialValue: 25

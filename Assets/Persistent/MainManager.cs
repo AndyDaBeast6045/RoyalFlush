@@ -16,6 +16,7 @@ public class MainManager : MonoBehaviour
     public List<CardObject> deck;
     public bool finalBattle;
     public bool map2;
+    public bool miniboss;
 
     private void Awake()
     {

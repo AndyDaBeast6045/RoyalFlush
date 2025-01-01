@@ -2195,10 +2195,12 @@ MonoBehaviour:
   enemyList: []
   encounterList:
   - {fileID: 11400000, guid: c623b553f5df60b4c91ea9848a9d3936, type: 2}
+  - {fileID: 11400000, guid: 01ec3d557aabb5a45a6ad039af00669c, type: 2}
+  - {fileID: 11400000, guid: 849868569b480c7449021e8bebb7f489, type: 2}
+  - {fileID: 11400000, guid: 2d60a6fa6a6d72049b2cde2f9833249f, type: 2}
   - {fileID: 11400000, guid: ed246253689518e449e3142df3affdb3, type: 2}
   - {fileID: 11400000, guid: 7e40920edc0cfba4baa469498c155695, type: 2}
-  - {fileID: 11400000, guid: d2e6551c3414b5d49beeb43fc5dd7239, type: 2}
-  - {fileID: 11400000, guid: 849868569b480c7449021e8bebb7f489, type: 2}
+  - {fileID: 11400000, guid: 3543c5654b1a58f4ca221e7dd0e83e29, type: 2}
   encounterIndex: 0
   enemyPositions:
   - {fileID: 590231659}
@@ -5325,9 +5327,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1345218189}
-  startClip: {fileID: 8300000, guid: 3935b1faac7dcdf4cb94184f3e3e0062, type: 3}
-  loopClip: {fileID: 8300000, guid: dab05e10a7bb9944db83882341371aeb, type: 3}
+  startStandardClip: {fileID: 8300000, guid: 3935b1faac7dcdf4cb94184f3e3e0062, type: 3}
+  loopStandardClip: {fileID: 8300000, guid: dab05e10a7bb9944db83882341371aeb, type: 3}
   victoryClip: {fileID: 8300000, guid: 822fdf91a399b74488a260f516b3e2a3, type: 3}
+  startBossClip: {fileID: 8300000, guid: 1ed45a6c135e1004a831ee055c95c59e, type: 3}
+  loopBossClip: {fileID: 8300000, guid: eb59488b83fe6f145b42ac358e25945b, type: 3}
 --- !u!82 &1345218189
 AudioSource:
   m_ObjectHideFlags: 0

@@ -178,14 +178,16 @@ public class SceneChanger : MonoBehaviour
     {
         StartCoroutine(changeToClikedSpriteAfterTime(1));
         //Replace '5' with hypothetical miniboss encounter
-        MainManager.Instance.finalBattle = true;
-        MainManager.Instance.nextEncounter = 4;
+        MainManager.Instance.miniboss = true;
+        MainManager.Instance.nextEncounter = 2;
         SceneManager.LoadScene("Combat", LoadSceneMode.Additive);
     }
 
     public void finalBossClick()
     {
-        Debug.Log("I don't think we have one of these yet...");
+        MainManager.Instance.finalBattle = true;
+        MainManager.Instance.nextEncounter = 3;
+        SceneManager.LoadScene("Combat", LoadSceneMode.Additive);
     }
 
     //Aesthetic map methods

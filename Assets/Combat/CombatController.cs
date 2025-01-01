@@ -57,7 +57,11 @@ public class CombatController : MonoBehaviour
         if ((enemyList.Length == 0) && (isVictory == false))
         {
             isVictory = true;
-            if (MainManager.Instance.finalBattle)
+            if (MainManager.Instance.miniboss)
+            {
+                MinibossVictory();
+            }
+            else if (MainManager.Instance.finalBattle)
             {
                 FinalVictory();
             }
@@ -146,7 +150,7 @@ public class CombatController : MonoBehaviour
             MainManager.Instance.deck.Add(reward);
         }
         MainManager.Instance.playerCurrentHealth = playerControllerObject.GetHealth();
-        MainManager.Instance.nextEncounter = Random.Range(1,4);
+        MainManager.Instance.nextEncounter = Random.Range(4,7);
     }
 
     public void Defeat()
@@ -155,11 +159,18 @@ public class CombatController : MonoBehaviour
         defeatCanvas.SetActive(true);
     }
 
-    public void FinalVictory()
+
+    public void MinibossVictory()
     {
-        //trueVictoryCanvas.SetActive(true);
+        MainManager.Instance.nextEncounter = Random.Range(4, 7);
+        MainManager.Instance.miniboss = false;
         SceneManager.UnloadSceneAsync("EventsAndMap");
         SceneManager.LoadScene("EventsAndMap", LoadSceneMode.Additive);
-        //SceneManager.UnloadSceneAsync("Combat");
+        SceneManager.UnloadSceneAsync("Combat");
+    }
+
+    public void FinalVictory()
+    {
+        trueVictoryCanvas.SetActive(true);
     }
 }
